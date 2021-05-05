@@ -5,10 +5,10 @@
  import knexUsers from '../../../db/knexPlantit.js';
  import Logger from '../../lib/Logger.js';
  
- export default class UserDb {
+ export default class CustomerDb {
   async findOne(username) {
     try {
-      return await knexUsers('users').where({ username: username }).select('*').first();
+      return await knexUsers('customers').where({ username: username }).select('*').first();
     } catch (e) {
       Logger.error(e.message);
     }
@@ -21,7 +21,7 @@
     */
    async add( name, username, email, type, password ) {
      try {
-       return await knexUsers('users').insert({ name, username, email, type, password });
+       return await knexUsers('customers').insert({ name, username, email, type, password });
      } catch(e) {
        Logger.error(e.message);
      }
@@ -35,7 +35,7 @@
     */
    async update(id, { name, username, email, type, password } ) {
      try {
-       return await knexUsers('users').where("id", id).update({ name, username, email, type, password });
+       return await knexUsers('customers').where("id", id).update({ name, username, email, type, password });
      } catch(e) {
        Logger.error(e.message);
      }
@@ -48,7 +48,7 @@
     */
    async delete(id) {
      try {
-       return await knexUsers('users').where("id", id).del();
+       return await knexUsers('customers').where("id", id).del();
      } catch(e) {
        Logger.error(e.message);
      }
@@ -59,7 +59,7 @@
     */
    async get() {
      try {
-       return await knexUsers('users').select("*");
+       return await knexUsers('customers').select("*");
      } catch(e) {
        Logger.error(e.message);
      }

@@ -2,15 +2,15 @@
  * Registering the ToDo API endpoints
  */
  import express from 'express';
- import userDb from '../model/user/UserDb.js';
- const userData = new userDb(); //Create an instance of userDb
+ import customerDb from '../model/customer/CustomerDb.js';
+ const customerData = new customerDb(); //Create an instance of userDb
 
  import {
-  getUser,
-  addUser,
-  updateUser,
-  deleteUser
- } from '../controllers/user/userController.js';
+  getCustomer,
+  addCustomer,
+  updateCustomer,
+  deleteCustomer
+ } from '../controllers/customer/customerController.js';
 
  /**
   * Make a Router
@@ -20,9 +20,9 @@
  /**
   * Router for users
   */
-  router.get('/users', async (req, res) => await getUser(userData, req, res)); // get users
-  router.post('/users', async (req, res) => await addUser(userData, req, res)); //add user
-  router.put('/users/:id', async (req, res) => await updateUser(userData, req, res)); // update user
-  router.delete('/users/:id', async (req, res) => await deleteUser(userData, req, res)); //delete user
+  router.get('/customers', async (req, res) => await getCustomer(customerData, req, res)); // get customers
+  router.post('/customers', async (req, res) => await addCustomer(customerData, req, res)); //add customers
+  router.put('/customers/:id', async (req, res) => await updateCustomer(customerData, req, res)); // update customer
+  router.delete('/customers/:id', async (req, res) => await deleteCustomer(customerData, req, res)); //delete customer
 
   export default router;

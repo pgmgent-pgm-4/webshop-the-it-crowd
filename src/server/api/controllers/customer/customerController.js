@@ -2,7 +2,7 @@
  * All the CRUD endpoint actions together
  */
 
- import parseUser from './parseUser.js';
+ import parseCustomer from './parseCustomer.js';
  import bcrypt from 'bcrypt';
  import dotenv from 'dotenv';
 
@@ -15,9 +15,9 @@
   * @param {*} request
   * @param {*} response
   */
- export const getUser = async (user, request, response) => {
+ export const getCustomer = async (customer, request, response) => {
    try {
-     response.status(200).json({ user: await user.get() });
+     response.status(200).json({ customer: await customer.get() });
    } catch({ message }) {
      response.status(500);
      response.json({ error: message });
@@ -31,12 +31,12 @@
   * @param {*} request
   * @param {*} response
   */
- export const addUser = async (user, request, response) => {
+ export const addCustomer = async (customer, request, response) => {
    try {
-     const { name, username, email, type, password } = parseUser(request, response);
+     const { name, username, email, type, password } = parseCustomer(request, response);
      const hashedPasswrd = await bcrypt.hash(password, parseInt(process.env.BCRYPT_SALT_ROUND));
-     const newUser = await user.add( name, username, email, type, hashedPasswrd );
-     response.status(201).json({ user: newUser });
+     const newCustomer = await customer.add( name, username, email, type, hashedPasswrd );
+     response.status(201).json({ customer: newCustomer });
    } catch({ message }) {
      response.status(500).json({ error: message });
    }
@@ -49,7 +49,7 @@
   * @param {*} request
   * @param {*} response
   */
- export const updateUser = async (user, request, response) => {
+ export const updateCustomer = async (user, request, response) => {
    try {
      const { name, username, email, type, password } = parseUser(request);
      const id = request.params.id;
@@ -70,7 +70,7 @@
   * @param {*} request
   * @param {*} response
   */
- export const deleteUser = async (user, request, response) => {
+ export const deleteCustomer = async (user, request, response) => {
    try {
      const id = request.params.id;
      await user.delete(id);

@@ -28,5 +28,5 @@
   * Start listening on a port
   */
  app.listen(process.env.PORT, () => {
-   Logger.warning(`Server started on port ${process.env.PORT}`);
+   Logger.stressedInfo(`Server started on port ${process.env.PORT}`);
  })
