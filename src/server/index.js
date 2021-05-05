@@ -21,7 +21,7 @@
  app.use(bodyParser.json());
 
  // add middleware and registerEndpoints
- app.use('/api', ...middleware, apiRoutes);
+ app.use('/api', ...middleware, ...apiRoutes);
  app.use('/auth', authenticateEndpoints);
 
  /**

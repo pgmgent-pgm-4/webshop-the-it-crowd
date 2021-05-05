@@ -5,10 +5,10 @@
  import knexPlantit from '../../lib/knexPlantit.js';
  import Logger from '../../lib/Logger.js';
  
- export default class CustomerDb {
-  async findOne(login_name) {
+ export default class DiscountDb {
+  async findOne(id) {
     try {
-      return await knexPlantit('customers').where({ login_name: login_name }).select('*').first();
+      return await knexPlantit('discounts').where({ id: id }).select('*').first();
     } catch (e) {
       Logger.error(e.message);
     }
@@ -19,9 +19,9 @@
     *
     * @param {string} description
     */
-   async add( login_name, login_password, email, shopping_cart, whish_list ) {
+   async add( discount_code, product_list, value, active ) {
      try {
-       return await knexPlantit('customers').insert({ login_name, login_password, email, shopping_cart, whish_list });
+       return await knexPlantit('discounts').insert({ discount_code, product_list, value, active });
      } catch(e) {
        Logger.error(e.message);
      }
@@ -33,9 +33,9 @@
     * @param {string} id
     * @param {string} description
     */
-   async update(id, { login_name, login_password, email, shopping_cart, whish_list } ) {
+   async update(id, { discount_code, product_list, value, active } ) {
      try {
-       return await knexPlantit('customers').where("id", id).update({ login_name, login_password, email, shopping_cart, whish_list });
+       return await knexPlantit('discounts').where("id", id).update({ discount_code, product_list, value, active });
      } catch(e) {
        Logger.error(e.message);
      }
@@ -48,7 +48,7 @@
     */
    async delete(id) {
      try {
-       return await knexPlantit('customers').where("id", id).del();
+       return await knexPlantit('discounts').where("id", id).del();
      } catch(e) {
        Logger.error(e.message);
      }
@@ -59,7 +59,7 @@
     */
    async get() {
      try {
-       return await knexPlantit('customers').select("*");
+       return await knexPlantit('discounts').select("*");
      } catch(e) {
        Logger.error(e.message);
      }

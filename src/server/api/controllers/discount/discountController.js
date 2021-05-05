@@ -2,7 +2,7 @@
  * All the CRUD endpoint actions together
  */
 
- import parseCustomer from './parseCustomer.js';
+ import parseDiscount from './parseDiscount.js';
  import bcrypt from 'bcrypt';
  import dotenv from 'dotenv';
 
@@ -15,9 +15,9 @@
   * @param {*} request
   * @param {*} response
   */
- export const getCustomer = async (customer, request, response) => {
+ export const getDiscount = async (discount, request, response) => {
    try {
-     response.status(200).json({ customer: await customer.get() });
+     response.status(200).json({ discount: await discount.get() });
    } catch({ message }) {
      response.status(500);
      response.json({ error: message });
@@ -31,12 +31,12 @@
   * @param {*} request
   * @param {*} response
   */
- export const addCustomer = async (customer, request, response) => {
+ export const addDiscount = async (discount, request, response) => {
    try {
-     const { name, username, email, type, password } = parseCustomer(request, response);
+     const { name, username, email, type, password } = parseDiscount(request, response);
      const hashedPasswrd = await bcrypt.hash(password, parseInt(process.env.BCRYPT_SALT_ROUND));
-     const newCustomer = await customer.add( name, username, email, type, hashedPasswrd );
-     response.status(201).json({ customer: newCustomer });
+     const newdiscount = await discount.add( name, username, email, type, hashedPasswrd );
+     response.status(201).json({ discount: newdiscount });
    } catch({ message }) {
      response.status(500).json({ error: message });
    }
@@ -49,13 +49,13 @@
   * @param {*} request
   * @param {*} response
   */
- export const updateCustomer = async (user, request, response) => {
+ export const updateDiscount = async (discount, request, response) => {
    try {
-     const { name, username, email, type, password } = parseCustomer(request);
+     const { name, username, email, type, password } = parseDiscount(request);
      const id = request.params.id;
      const hashedPasswrd = await bcrypt.hash(password, parseInt(process.env.BCRYPT_SALT_ROUND));
      
-     const updatedUser = await user.update(id, { name, username, email, type, hashedPasswrd });
+     const updatedUser = await discount.update(id, { name, username, email, type, hashedPasswrd });
      response.status(200).json({ user: updatedUser });
    }
    catch({ message }) {
@@ -70,10 +70,10 @@
   * @param {*} request
   * @param {*} response
   */
- export const deleteCustomer = async (user, request, response) => {
+ export const deleteDiscount = async (discount, request, response) => {
    try {
      const id = request.params.id;
-     await user.delete(id);
+     await discount.delete(id);
      response.status(204).end();
    }
    catch({ message }) {

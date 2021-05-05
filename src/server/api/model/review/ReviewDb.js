@@ -5,10 +5,10 @@
  import knexPlantit from '../../lib/knexPlantit.js';
  import Logger from '../../lib/Logger.js';
  
- export default class CustomerDb {
-  async findOne(login_name) {
+ export default class ReviewDb {
+  async findOne(id) {
     try {
-      return await knexPlantit('customers').where({ login_name: login_name }).select('*').first();
+      return await knexPlantit('reviews').where({ id: id }).select('*').first();
     } catch (e) {
       Logger.error(e.message);
     }
@@ -19,9 +19,9 @@
     *
     * @param {string} description
     */
-   async add( login_name, login_password, email, shopping_cart, whish_list ) {
+   async add( product_id, customer_id, description, score, date_created ) {
      try {
-       return await knexPlantit('customers').insert({ login_name, login_password, email, shopping_cart, whish_list });
+       return await knexPlantit('reviews').insert({ product_id, customer_id, description, score, date_created });
      } catch(e) {
        Logger.error(e.message);
      }
@@ -33,9 +33,9 @@
     * @param {string} id
     * @param {string} description
     */
-   async update(id, { login_name, login_password, email, shopping_cart, whish_list } ) {
+   async update(id, { product_id, customer_id, description, score, date_created } ) {
      try {
-       return await knexPlantit('customers').where("id", id).update({ login_name, login_password, email, shopping_cart, whish_list });
+       return await knexPlantit('reviews').where("id", id).update({ product_id, customer_id, description, score, date_created });
      } catch(e) {
        Logger.error(e.message);
      }
@@ -48,7 +48,7 @@
     */
    async delete(id) {
      try {
-       return await knexPlantit('customers').where("id", id).del();
+       return await knexPlantit('reviews').where("id", id).del();
      } catch(e) {
        Logger.error(e.message);
      }
@@ -59,7 +59,7 @@
     */
    async get() {
      try {
-       return await knexPlantit('customers').select("*");
+       return await knexPlantit('reviews').select("*");
      } catch(e) {
        Logger.error(e.message);
      }
