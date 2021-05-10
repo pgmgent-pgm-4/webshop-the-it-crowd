@@ -23,6 +23,7 @@
   "homepage": "https://github.com/pgmgent-pgm-4/webshop-the-it-crowd.git#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "better-sqlite3": "^7.3.1",
     "body-parser": "^1.19.0",
     "chalk": "^4.1.0",
     "dotenv": "^8.2.0",
@@ -33,6 +34,7 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "sqlite3": "^5.0.2",
+    "typeorm": "^0.2.32",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
