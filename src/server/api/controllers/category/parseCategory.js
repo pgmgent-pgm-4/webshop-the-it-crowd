@@ -3,13 +3,13 @@
  */
 
  export default (request, response) => {
-    const { order } = request.body;
+    const { category } = request.body;
   
     // validate if we have a  in the body
-    if (order == null) {
-      throw new Error('The order object was not set.');
+    if (category == null) {
+      throw new Error('The category object was not set.');
     }
   
     // return the parsed
-    return order;
+    return category;
   }

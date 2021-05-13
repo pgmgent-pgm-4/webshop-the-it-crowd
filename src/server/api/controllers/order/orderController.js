@@ -8,13 +8,6 @@
 
  dotenv.config();
 
- /**
-  * Getting the todos
-  *
-  * @param {*} song
-  * @param {*} request
-  * @param {*} response
-  */
  export const getOrder = async (order, request, response) => {
    try {
      response.status(200).json({ order: await order.get() });
@@ -23,39 +16,34 @@
      response.json({ error: message });
    }
  };
+
+ export const getOrderById = async (order, request, response) => {
+    try {
+        const id = request.params.ordersId;
+      response.status(200).json({ order: await order.findOne(id) });
+    } catch({ message }) {
+      response.status(500);
+      response.json({ error: message });
+    }
+  };
  
- /**
-  * Creates a new todo item
-  *
-  * @param {*} song
-  * @param {*} request
-  * @param {*} response
-  */
  export const addOrder = async (order, request, response) => {
    try {
-     const { name, ordername, email, type, password } = parseOrder(request, response);
-     const hashedPasswrd = await bcrypt.hash(password, parseInt(process.env.BCRYPT_SALT_ROUND));
-     const newOrder = await order.add( name, ordername, email, type, hashedPasswrd );
+     const { user_id, products } = parseOrder(request, response);
+     const create_date = new Date().toLocaleDateString();
+     const newOrder = await order.add( user_id, products );
      response.status(201).json({ order: newOrder });
    } catch({ message }) {
      response.status(500).json({ error: message });
    }
  };
- 
- /**
-  * Update a new todo item
-  *
-  * @param {*} song
-  * @param {*} request
-  * @param {*} response
-  */
+
  export const updateOrder = async (order, request, response) => {
    try {
-     const { name, ordername, email, type, password } = parseOrder(request);
-     const id = request.params.id;
-     const hashedPasswrd = await bcrypt.hash(password, parseInt(process.env.BCRYPT_SALT_ROUND));
+     const {  user_id, products } = parseOrder(request);
+     const id = request.params.ordersId;
      
-     const updatedOrder = await order.update(id, { name, ordername, email, type, hashedPasswrd });
+     const updatedOrder = await order.update(id, user_id, products);
      response.status(200).json({ order: updatedOrder });
    }
    catch({ message }) {
@@ -63,16 +51,9 @@
    }
  };
  
- /**
-  * Delete a todo item
-  *
-  * @param {*} song
-  * @param {*} request
-  * @param {*} response
-  */
  export const deleteOrder = async (order, request, response) => {
    try {
-     const id = request.params.id;
+    const id = request.params.ordersId;
      await order.delete(id);
      response.status(204).end();
    }

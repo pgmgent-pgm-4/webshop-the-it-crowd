@@ -7,7 +7,7 @@
   
     // validate if we have a  in the body
     if (product == null) {
-      throw new Error('The discount object was not set.');
+      throw new Error('The product object was not set.');
     }
   
     // return the parsed

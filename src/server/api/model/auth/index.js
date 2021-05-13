@@ -5,8 +5,8 @@ import passport from 'passport';
 import passportLocal from 'passport-local';
 const LocalStrategy = passportLocal.Strategy;
 
-import CustomerDb from '../customer/CustomerDb.js';
-const customerData = new CustomerDb();
+import UserDb from '../User/index.js';
+const userData = new UserDb();
 
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
@@ -25,34 +25,34 @@ passport.use(new LocalStrategy({
         Logger.info(username);
 
         // get user from db
-        const customer = await customerData.findOne(username);
+        const user = await userData.findOne(username);
         // check if user is found
-        if (!customer) {
-            return done(null, false, {message: 'Customer not found in database'})
+        if (!user) {
+            return done(null, false, {message: 'User not found in database'})
         }
         // check on valid pass
-        if (!await isPasswordValid(password, customer.password)) {
+        if (!await isPasswordValid(password, user.userpwd)) {
             return done(null, false, { message: 'Password incorrect' })
         }
         // return the existing and authenticated used
-        return done(null, customer);
+        return done(null, user);
     }
 ));
 
 app.post('/login', (req, res) => {
     // do authentication
     console.log(req.body);
-    passport.authenticate('local', (error, customer, info) => {
+    passport.authenticate('local', (error, user, info) => {
         if (error) {
             res.status(401).json(info)
-        } else if (!customer) {
+        } else if (!user) {
             res.status(401).json(info)
         } else {
             const jwtData = {
-                id: customer.id,
-                username: customer.username,
-                email: customer.email,
-                type: customer.type
+                id: user.id,
+                username: user.username,
+                email: user.email,
+                type: user.type
             }
             const token = jwt.sign(jwtData, process.env.JWT_UNIQUE_KEY, {
                 expiresIn: parseInt(process.env.JWT_LIFETIME)
@@ -61,11 +61,10 @@ app.post('/login', (req, res) => {
             res.status(200).json({
                 succes: true,
                 token: token,
-                customer: {
-                    id: customer.id,
-                    username: customer.username,
-                    email: customer.email,
-                    type: customer.type
+                user: {
+                    id: user.id,
+                    username: user.username,
+                    email: user.email
                 }
             });
         }
@@ -80,7 +79,7 @@ app.post('/hashpass', (req, res) => {
 
 export default app;
 
-const isPasswordValid = async (customerPassword, dbPassword) => {
-    const match = await bcrypt.compare(customerPassword, dbPassword);
+const isPasswordValid = async (userPassword, dbPassword) => {
+    const match = await bcrypt.compare(userPassword, dbPassword);
     return match
 }
