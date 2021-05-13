@@ -1,15 +1,19 @@
-import customerRoutes from './customerRoutes.js';
-import discountRoutes from './discountRoutes.js';
+import userRoutes from './userRoutes.js';
+import profileRoutes from './profileRoutes.js';
+import categoryRoutes from './categoryRoutes.js';
+import orderRoutes from './orderRoutes.js';
+import paymentRoutes from './paymentRoutes.js';
 import reviewRoutes from './reviewRoutes.js';
 import productRoutes from './productRoutes.js';
-import orderRoutes from './orderRoutes.js';
-import postRoutes from './postRoutes.js';
+import promotionRoutes from './promotionRoutes.js';
 
 export default [
-    customerRoutes,
-    discountRoutes,
+    userRoutes,
+    profileRoutes,
+    categoryRoutes,
+    orderRoutes,
+    paymentRoutes,
     reviewRoutes,
     productRoutes,
-    orderRoutes,
-    postRoutes
+    promotionRoutes
 ]

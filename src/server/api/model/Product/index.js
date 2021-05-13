@@ -1,38 +1,35 @@
 import typeormConfig from '../../../../ormConfig.js'
 import Logger from '../../lib/Logger.js'
 
-export default class Category {
-    constructor(name, description ) {
-        this.name = name;
-        this.description = description;
+export default class Product {
+    constructor( ) {
 
     }
 
-    
     async get() {
         try {
-            let myRepo = await this.makeConnection('Category')
+            let myRepo = await this.makeConnection('Product')
             return myRepo.find()
+
+        } catch (e) {
+            Logger.error(e)
+        }
+    }
+
+    
+    async add(title,price,synopsis,description,tags) {
+        try {
+            let myRepo = await this.makeConnection('Product');
+            return myRepo.save( {title,price,synopsis,description,tags} )
             
         } catch (e) {
             Logger.error(e)
         }
     }
-    
-    async add(name, description) {
+    async update(id, title,price,synopsis,description,tags) {
         try {
-            let myRepo = await this.makeConnection('Category');
-            return myRepo.save( {name, description} )
-            
-        } catch (e) {
-            Logger.error(e)
-        }
-    }
-    
-    async update(id, name, description) {
-        try {
-            let myRepo = await this.makeConnection('Category');
-            return await myRepo.update({ id }, {name, description});
+            let myRepo = await this.makeConnection('Product');
+            return myRepo.update( {id}, {title,price,synopsis,description,tags} )
             
         } catch (e) {
             Logger.error(e)
@@ -41,7 +38,7 @@ export default class Category {
     
     async delete(id) {
         try {
-            let myRepo = await this.makeConnection('Category');
+            let myRepo = await this.makeConnection('Product');
             return myRepo.delete({ id })
             
         } catch (e) {
@@ -51,9 +48,9 @@ export default class Category {
     
     async findOne(id) {
         try {
-            let myRepo = await this.makeConnection('Category')
+            let myRepo = await this.makeConnection('Product')
             return myRepo.findOne({ id })
-    
+
         } catch (e) {
             Logger.error(e)
         }
@@ -68,3 +65,4 @@ export default class Category {
         }
     }
 }
+

@@ -8,13 +8,6 @@
 
  dotenv.config();
 
- /**
-  * Getting the todos
-  *
-  * @param {*} song
-  * @param {*} request
-  * @param {*} response
-  */
  export const getProduct = async (product, request, response) => {
    try {
      response.status(200).json({ product: await product.get() });
@@ -23,56 +16,43 @@
      response.json({ error: message });
    }
  };
+
+ export const getProductById = async (product, request, response) => {
+    try {
+        const id = request.params.productsId;
+      response.status(200).json({ product: await product.findOne(id) });
+    } catch({ message }) {
+      response.status(500);
+      response.json({ error: message });
+    }
+  };
  
- /**
-  * Creates a new todo item
-  *
-  * @param {*} song
-  * @param {*} request
-  * @param {*} response
-  */
  export const addProduct = async (product, request, response) => {
    try {
-     const { name, productname, email, type, password } = parseProduct(request, response);
-     const hashedPasswrd = await bcrypt.hash(password, parseInt(process.env.BCRYPT_SALT_ROUND));
-     const newproduct = await product.add( name, productname, email, type, hashedPasswrd );
-     response.status(201).json({ product: newproduct });
+     const {  title, price, synopsis, description, tags } = parseProduct(request, response);
+     const newProduct = await product.add(  title, price, synopsis, description, JSON.stringify(tags) );
+     response.status(201).json({ product: newProduct });
    } catch({ message }) {
      response.status(500).json({ error: message });
    }
  };
- 
- /**
-  * Update a new todo item
-  *
-  * @param {*} song
-  * @param {*} request
-  * @param {*} response
-  */
+
  export const updateProduct = async (product, request, response) => {
    try {
-     const { name, productname, email, type, password } = parseProduct(request);
-     const id = request.params.id;
-     const hashedPasswrd = await bcrypt.hash(password, parseInt(process.env.BCRYPT_SALT_ROUND));
+     const { title, price, synopsis, description, tags } = parseProduct(request);
+     const id = request.params.productsId;
      
-     const updatedproduct = await product.update(id, { name, productname, email, type, hashedPasswrd });
-     response.status(200).json({ product: updatedproduct });
+     const updatedProduct = await product.update(id, title, price, synopsis, description, tags);
+     response.status(200).json({ product: updatedProduct });
    }
    catch({ message }) {
      response.status(500).json({ error: message });
    }
  };
  
- /**
-  * Delete a todo item
-  *
-  * @param {*} song
-  * @param {*} request
-  * @param {*} response
-  */
  export const deleteProduct = async (product, request, response) => {
    try {
-     const id = request.params.id;
+    const id = request.params.productsId;
      await product.delete(id);
      response.status(204).end();
    }
