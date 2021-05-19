@@ -1,3 +1,4 @@
+
 import typeorm from 'typeorm';
 
 import UserSchema from '../model/User.model.js';
@@ -18,7 +19,7 @@ export default typeorm.createConnection({
     // port: 3306,
     // username: "test",
     // password: "test",
-    database: "src/data/webshop.db3",
+    database: "server/data/webshop.db3",
     synchronize: true,
     logging: true,
     entities: [

@@ -2,10 +2,10 @@
   "name": "webshop-plant-it",
   "version": "1.0.0",
   "description": "plant webshop ecommerce",
-  "main": "server/src/app.js",
+  "main": "src/server/app.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/app.js --watch src/*",
+    "dev": "nodemon server/app.js --watch server/*",
     "lint": "cross-env NODE_ENV=lint eslint . --ext .js --fix"
   },
   "repository": {
