@@ -41,6 +41,9 @@ export default new EntitySchema({
         }
     },
     relations: {
-        
+        "products_has_categories": {
+            type: "one-to-many",
+            target: "products_has_categories"
+        }
     }
 });

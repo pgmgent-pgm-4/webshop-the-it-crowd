@@ -10,16 +10,16 @@
 
  dotenv.config();
 
- export const getUser = async (res, req) => {
+ export const getUser = async (req, res) => {
    try {
-     res.status(200).json({ user: await Database.get() });
+     res.status(200).json({ user: await Database.find() });
    } catch({ message }) {
      res.status(500);
      res.json({ error: message });
    }
  };
 
- export const getUserById = async (res, req) => {
+ export const getUserById = async (req, res) => {
     try {
         const id = req.params.usersId;
       res.status(200).json({ user: await Database.findOne({id}) });
@@ -29,17 +29,17 @@
     }
   };
  
- export const addUser = async (res, req) => {
+ export const addUser = async (req, res) => {
    try {
     req.body.password = await bcrypt.hash(req.body.password, parseInt(process.env.BCRYPT_SALT_ROUND))
     req.body.createdAt = new Date.now();
-     res.status(201).json({ user: await Database.add( req.body ) });
+     res.status(201).json({ user: await Database.save( req.body ) });
    } catch({ message }) {
      res.status(500).json({ error: message });
    }
  };
  
- export const updateUser = async (res, req) => {
+ export const updateUser = async (req, res) => {
    try {
      const id = req.params.usersId;
      req.body.password = await bcrypt.hash(req.body.password, parseInt(process.env.BCRYPT_SALT_ROUND))
@@ -51,7 +51,7 @@
    }
  };
  
- export const deleteUser = async (res, req) => {
+ export const deleteUser = async (req, res) => {
    try {
      const id = req.params.usersId;
      await Database.delete({id});

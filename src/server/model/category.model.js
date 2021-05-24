@@ -19,5 +19,11 @@ export default new EntitySchema({
             type: "text",
             nullable: true
         }
+    },
+    relations: {
+        "products_has_categories": {
+            type: "one-to-many",
+            target: "products_has_categories"
+        }
     }
 });

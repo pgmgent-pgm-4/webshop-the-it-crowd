@@ -7,7 +7,7 @@
 
  export const getPromotion = async (req, res) => {
    try {
-     res.status(200).json({ promotion: await Database.get() });
+     res.status(200).json({ promotion: await Database.find() });
    } catch({ message }) {
      res.status(500);
      res.json({ error: message });
@@ -27,7 +27,7 @@
  export const addPromotion = async (req, res) => {
    try {
        req.body.createdAt = new Date.now();
-     res.status(201).json({ promotion: await Database.add( req.body ) });
+     res.status(201).json({ promotion: await Database.save( req.body ) });
    } catch({ message }) {
      res.status(500).json({ error: message });
    }

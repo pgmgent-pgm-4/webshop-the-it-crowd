@@ -4,25 +4,27 @@
  import database from '../../config/ormConfig.js';
  const Database = await (await database).getRepository('Product');
 
- export const getProduct = async (res, req) => {
+ export const getProduct = async (req, res) => {
    try {
-     res.status(200).json({ productData: await Database.get() });
+     res.status(200).json({ productData: await Database.find() });
    } catch({ message }) {
      res.status(500);
      res.json({ error: message });
    }
  };
 
- export const addProduct = async (res, req) => {
+ export const addProduct = async (req, res) => {
      try {
-        req.body.createdAt = new Date.now()
-         res.status(201).json({ productData: await Database.add(  req.body ) });
+        let {product, categories} = req.body;
+
+        product.createdAt = Date.now();      
+        res.status(201).json({ productData: await Database.save(  product ) });
         } catch({ message }) {
             res.status(500).json({ error: message });
         }
     };
     
-    export const updateProduct = async (res, req) => {
+    export const updateProduct = async (req, res) => {
         try {
             const id = req.params.productId;
             req.body.modifiedAt = new Date.now()
@@ -33,7 +35,7 @@
         }
     };
     
-    export const deleteProduct = async (res, req) => {
+    export const deleteProduct = async (req, res) => {
         try {
             const id = req.params.productsId;
             await Database.delete({id});
@@ -44,7 +46,7 @@
         }
     };
 
-    export const getProductById = async (res, req) => {
+    export const getProductById = async (req, res) => {
        try {
            const id = req.params.productsId;
          res.status(200).json({ productData: await Database.findOne({id}) });

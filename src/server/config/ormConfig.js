@@ -1,4 +1,3 @@
-
 import typeorm from 'typeorm';
 
 import UserSchema from '../model/User.model.js';
