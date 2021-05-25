@@ -31,7 +31,6 @@ export default new EntitySchema({
         "orders": {
             target: "Order",
             type: "many-to-one",
-
         },
         "products": {
             target: "Product",

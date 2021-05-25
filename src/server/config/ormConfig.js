@@ -9,7 +9,6 @@ import OrderSchema from '../model/Order.model.js';
 import PaymentSchema from '../model/Payment.model.js';
 import PromotionSchema from '../model/Promotion.model.js';
 import order_products from '../model/order_products.model.js';
-import product_has_categories from '../model/product_has_categories.model.js';
 
 
 export default typeorm.createConnection({
@@ -30,7 +29,6 @@ export default typeorm.createConnection({
         PaymentSchema,
         PromotionSchema,
         ProductSchema,
-        order_products,
-        product_has_categories
+        order_products
     ]
 })

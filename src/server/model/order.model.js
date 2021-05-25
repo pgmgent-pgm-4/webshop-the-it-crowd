@@ -27,6 +27,14 @@ export default new EntitySchema({
         "users": {
             target: "User",
             type: "many-to-one"
+        },
+        "order_products": {
+            target: "order_products",
+            type: "one-to-many"
+        },
+        "payments": {
+            target: "payments",
+            type: "one-to-many"
         }
     }
 });

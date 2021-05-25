@@ -33,13 +33,11 @@ export default new EntitySchema({
     relations: {
         "users": {
             target: "User",
-            type: "many-to-one",
-            cascade: true
+            type: "many-to-one"
         },
         "orders": {
             target: "Order",
-            type: "many-to-one",
-            cascade: true
+            type: "many-to-one"
         }
     }
 });

@@ -35,5 +35,11 @@ export default new EntitySchema({
             type: "int",
             nullable: true
         }
+    },
+    relations: {
+        "payments": {
+            target: "payments",
+            type: "one-to-many"
+        }
     }
 });
