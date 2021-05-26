@@ -1,0 +1,131 @@
+.footer {
+    &__top {
+        padding: $spacing-base;
+        background-color: $color-white;
+
+        ul {
+            @media (min-width: $medium-container) {
+                display: flex;
+                justify-content: space-between;
+
+                li {
+                    margin-right: $spacing-base;
+
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                }
+            }
+
+            li {
+                display: flex;
+                align-items: center;
+                margin-bottom: $spacing-sm;
+
+                svg {
+                    margin-right: $spacing-sm;
+                }
+
+                .footer__top__accent {
+                    color: $color-green-accent;
+                }
+            }
+        }
+    }
+
+    &__bottom {
+        padding: $spacing-base;
+        background-color: $color-primary;
+        color: $color-bg;
+
+        @media (min-width: $medium-container) {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row-reverse;
+        }
+
+        &__socials {
+            margin-bottom: $spacing-md;
+
+            @media (min-width: $medium-container) {
+                display: flex;
+                padding-top: 0.5rem;
+
+                svg {
+                    width: 2rem;
+                }
+            }
+
+            svg {
+                margin-right: $spacing-sm;
+                cursor: pointer;
+            }
+        }
+
+        article {
+            margin-bottom: $spacing-md;
+
+            img {
+                margin-bottom: $spacing-base;
+            }
+
+            h2 {
+                margin-bottom: $spacing-base;
+                font-weight: bold;
+                font-size: $text-md;
+            }
+        }
+
+        &__content {
+            @media (min-width: $medium-container) {
+                display: flex;
+                flex-wrap: wrap;
+
+                article {
+                    margin-right: $spacing-lg;
+                }
+
+                .footer--padding {
+                    padding-top: 1rem;
+                }
+            }
+            
+            &__contact {
+                li {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: $spacing-sm;
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+
+                    svg {
+                        margin-right: $spacing-sm;
+                    }
+                }
+            }
+        }
+    }
+    
+    &__list {
+        &-item {
+            margin-bottom: $spacing-sm;
+        }
+    }
+
+    &__legal {
+        display: flex;
+        font-style: italic;
+        font-size: $text-sm;
+        width: 100%;
+
+        p {
+            margin-right: $spacing-md;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+}
