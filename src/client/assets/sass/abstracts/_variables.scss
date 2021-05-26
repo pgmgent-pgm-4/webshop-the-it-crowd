@@ -1,13 +1,44 @@
 // Colors
-$main-green: #415E46;
-$secondary-green: #EEF2EE;
-$accent-green: #40C479;
+$color-primary: #415E46;
+$color-green-light: #EEF2EE;
+$color-green-accent: #40C479;
 
-$main-white: #F9F9F9;
-$secondary-white: #ffff;
+$color-bg: #F9F9F9;
+$color-white: #ffff;
 
-$main-black: #0000;
-$secondary-black: #000000c9;
+$color-black: #0000;
+$color-black-light: #000000c9;
 
-$main-blue: #257C81;
-$secondary-blue: #EEF2F2;
+$color-info: #257C81;
+$color-blue-light: #EEF2F2;
+
+$color-red: #FD7B38;
+$color-red-dark: #C75313;
+
+// Font-size
+$text-sm: .85rem;
+$text-base: 1rem;
+$text-md: 1.25rem;
+$text-lg: 2rem;
+$text-xl: 3rem;
+$text-xxl: 6rem;
+
+// Widths
+$small-container: 35rem;
+$medium-container: 45rem;
+$large-container: 75rem;
+
+// Radius
+$radius-sm: 0.25rem;
+$radius-base: 0.50rem;
+$radius-base: 1rem;
+$radius-lg: 1.5rem;
+
+// Spacing
+$spacing-sm: 0.5rem;
+$spacing-base: 1rem;
+$spacing-md: 1.5rem;
+$spacing-ml: 2rem;
+$spacing-lg: 2.5rem;
+$spacing-xl: 4rem;
+$spacing-xxl: 6rem;
