@@ -1,5 +1,61 @@
 .nav {
-    display: flex;
+    &__top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: $spacing-base;
+        background-color: $color-primary;
+    }
 
-    background-color: $color-primary;
+    &__right {
+        display: flex;
+        align-items: center;
+
+        @media (min-width: $medium-container) {
+            flex-direction: row-reverse;
+
+            .nav__cart {
+                margin-right: 0;
+                margin-left: $spacing-md;
+            }
+        }
+    }
+
+    &__cart {
+        margin-right: $spacing-md;
+        cursor: pointer;
+    }
+
+    &__list {
+        display: none;
+
+        &-item--active a {
+            border-bottom: 2px solid $color-bg;
+        }
+
+        li {
+            color: $color-bg;
+            padding-right: $spacing-md;
+
+            a {
+                padding-bottom: $spacing-sm;
+            }
+
+            &:last-child {
+                padding-right: 0;
+            }
+        }
+
+        @media (min-width: $medium-container) {
+            display: flex;
+        }
+    }
+    
+    &__hamburger {
+        cursor: pointer;
+
+        @media (min-width: $medium-container) {
+            display: none;
+        }
+    }
 }

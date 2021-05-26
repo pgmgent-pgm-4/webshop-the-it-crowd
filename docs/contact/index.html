@@ -1,4 +1,15 @@
-<section class="nav__top">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+<body>
+    <nav class="nav">
+    <section class="nav__top">
     <div class="nav__logo">
         <a href="..">
             <img src="../assets/img/group 47.png">
@@ -22,19 +33,23 @@
             </svg>
         </div>
 
-        {{ collections.all | eleventyNavigation | eleventyNavigationToHtml({
-            listElement: "ul",
-            listItemElement: "li",
-            listClass: "nav__list",
-            listItemClass: "nav__list-item",
-            listItemHasChildrenClass: "has-children",
-            activeListItemClass: "nav__list-item--active",
-            activeKey: eleventyNavigation.key,
-            showExcerpt: false
-        }) | safe }}
+        <ul class="nav__list"><li class="nav__list-item"><a href="/">Home</a></li>
+<li class="nav__list-item nav__list-item--active"><a href="/contact/">Contact</a></li>
+<li class="nav__list-item"><a href="/about/">About</a></li>
+<li class="nav__list-item"><a href="/log-in/">Log In</a></li></ul>
     </div>
 </section>
 
 <section class="nav__bottom">
 
 </section>
+</nav>
+
+    <main>
+        
+    </main>
+
+    
+
+</body>
+</html>
