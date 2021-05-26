@@ -29,6 +29,14 @@
     &__list {
         display: none;
 
+        &-item a {
+            transition: 0.2s ease;
+
+            &:hover {
+                border-bottom: 2px solid $color-bg;
+            }
+        }
+
         &-item--active a {
             border-bottom: 2px solid $color-bg;
         }
@@ -56,6 +64,41 @@
 
         @media (min-width: $medium-container) {
             display: none;
+        }
+    }
+
+    &__bottom {
+        padding: $spacing-base;
+        font-weight: bold;
+
+        &__items {
+            display: none;
+
+            @media (min-width: $small-container) {
+                display: flex;
+            }
+        }
+
+        &--item {
+            cursor: pointer;
+            display: flex;
+            align-items: baseline;
+            width: fit-content;
+            margin-right: $spacing-md;
+
+            &:last-child {
+                margin-right: 0;
+            }
+
+            p {
+                margin-right: $spacing-sm;
+            }
+        }
+
+        &__mobile {
+            @media (min-width: $small-container) {
+                display: none;
+            }
         }
     }
 }
