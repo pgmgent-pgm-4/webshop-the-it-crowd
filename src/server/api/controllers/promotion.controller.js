@@ -3,7 +3,7 @@
  */
 
  import database from '../../config/ormConfig.js';
- const Database = await (await database).getRepository('Promotion');
+ const Database = await (database).getRepository('Promotion');
 
  export const getPromotion = async (req, res) => {
    try {

@@ -41,25 +41,17 @@ export default new EntitySchema({
         }
     },
     relations: {
-        "categories": {
-            type: "many-to-many",
-            target: "categories",
-            // name: "products_has_categories",
-            joinTable: {
-                joinColumn:{
-                    name: "product_id",
-                    referencedColumnName: "id"
-                },
-                inverseJoinColumn: {
-                    name: "category_id",
-                    referencedColumnName: "id"
-                }
-            },
-            cascade: true
+        "reviews": {
+            target: 'reviews',
+            type: "one-to-many"
         },
         "order_products": {
             target: "order_products",
             type: "one-to-many"
+        },
+        "products_has_categories": {
+            target: "products_has_categories",
+            type: 'one-to-many'
         }
     }
 });

@@ -3,7 +3,7 @@
  */
 
  import database from '../../config/ormConfig.js';
- const Database = await (await database).getRepository('User');
+ const Database = await (database).getRepository('User');
 
  import bcrypt from 'bcrypt';
  import dotenv from 'dotenv';

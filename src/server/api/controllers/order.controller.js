@@ -2,7 +2,7 @@
  * All the CRUD endpoint actions together
  */
  import database from '../../config/ormConfig.js';
- const Database = await (await database).getRepository('Order');
+ const Database = await (database).getRepository('Order');
 
  export const getOrder = async (req, res) => {
    try {

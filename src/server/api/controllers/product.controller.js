@@ -2,7 +2,7 @@
  * All the CRUD endpoint actions together
  */
  import database from '../../config/ormConfig.js';
- const Database = await (await database).getRepository('Product');
+ const Database = await (database).getRepository('Product');
 
  export const getProduct = async (req, res) => {
    try {
@@ -49,7 +49,7 @@
     export const getProductById = async (req, res) => {
        try {
            const id = req.params.productsId;
-         res.status(200).json({ productData: await Database.findOne({id}) });
+         res.status(200).json({ productData: await Database.findOne({id})});
        } catch({ message }) {
          res.status(500);
          res.json({ error: message });

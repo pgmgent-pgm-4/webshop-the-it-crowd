@@ -3,7 +3,7 @@
  */
 
  import database from '../../config/ormConfig.js';
- const Database = await (await database).getRepository('Review');
+ const Database = await (database).getRepository('Review');
 
 
  export const getReview = async (req, res) => {

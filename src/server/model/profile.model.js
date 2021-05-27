@@ -22,9 +22,6 @@ export default new EntitySchema({
         dob: {
             type: "int",
         },
-        address: {
-            type: "varchar"
-        },
         street: {
             type: "varchar"
         },
@@ -46,13 +43,13 @@ export default new EntitySchema({
         modifiedAt: {
              type: "int",
              nullable: true
+        },
+        user_id: {
+            type: 'int',
+            nullable: false
         }
     },
     relations: {
-        "users": {
-            target: "User",
-            type: "many-to-one",
-            cascade: true
-        }
+
     }
 });

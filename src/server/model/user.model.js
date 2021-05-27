@@ -40,6 +40,14 @@ export default new EntitySchema({
         "payments": {
             target: "payments",
             type: "one-to-many"
+        },
+        "reviews": {
+            target: "reviews",
+            type: "one-to-many"
+        },
+        "orders": {
+            target: "orders",
+            type: "one-to-many"
         }
     }
 });

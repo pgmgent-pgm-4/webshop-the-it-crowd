@@ -16,16 +16,15 @@ export default new EntitySchema({
             nullable: false,
             unique: true
         },
-        active: {
-            type: "int"
-        },
         value: {
             type: "text",
             nullable: false
         },
-        type: {
-            type: "text",
-            nullable: true
+        fromDate: {
+            type: "int"
+        },
+        toDate: {
+            type: "int"
         },
         createdAt: {
             type: "int"
@@ -33,13 +32,13 @@ export default new EntitySchema({
         modifiedAt: {
             type: "int",
             nullable: true
+        },
+        product_id: {
+            type: 'int',
+            nullable: false
         }
     },
     relations: {
-        "product": {
-            target: "Product",
-            type: "many-to-one",
-            cascade: true
-        }
+
     }
 });

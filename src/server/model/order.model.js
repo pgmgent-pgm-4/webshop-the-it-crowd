@@ -21,13 +21,14 @@ export default new EntitySchema({
         createdAt:{
             type: "int",
             nullable: false
+        },
+        user_id: {
+            type: 'int',
+            nullable: true,
+            
         }
     },
     relations: {
-        "users": {
-            target: "User",
-            type: "many-to-one"
-        },
         "order_products": {
             target: "order_products",
             type: "one-to-many"

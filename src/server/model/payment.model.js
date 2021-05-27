@@ -28,16 +28,17 @@ export default new EntitySchema({
         modifiedAt: {
             type: "int",
             nullable: true
+        },
+        user_id: {
+            type: 'int',
+            nullable: false
+        },
+        order_id: {
+            type: 'int',
+            nullable: false
         }
     },
     relations: {
-        "users": {
-            target: "User",
-            type: "many-to-one"
-        },
-        "orders": {
-            target: "Order",
-            type: "many-to-one"
-        }
+
     }
 });
