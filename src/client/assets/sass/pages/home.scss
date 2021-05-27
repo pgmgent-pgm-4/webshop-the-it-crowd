@@ -1,8 +1,10 @@
 .home {
     &__discover {
+        margin-bottom: $spacing-xxl;
+        
         h2 {
             text-align: center;
-            margin-bottom: $spacing-lg;
+            margin-bottom: $spacing-xl;
         }
 
         ul {
