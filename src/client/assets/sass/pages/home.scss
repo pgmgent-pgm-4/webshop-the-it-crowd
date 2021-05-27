@@ -1,0 +1,62 @@
+.home {
+    &__discover {
+        h2 {
+            text-align: center;
+            margin-bottom: $spacing-lg;
+        }
+
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+            li {
+                width: 48%;
+                height: 15rem;
+                background-color: $color-white;
+                margin-bottom: $spacing-md;
+                border-radius: $radius-md;
+                box-shadow: 6px 10px 31px 0px rgb(170, 170, 170);
+                transition: 0.2s ease;
+
+                @media (min-width: $large-container) {
+                    height: 15rem;
+                    width: 15rem;
+                }
+
+                &:hover {
+                    background-color: rgb(238, 238, 238);
+                }
+
+                a {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100%;
+                }
+
+                svg {
+                    width: 7rem;
+                    height: fit-content;
+                    fill: $color-primary;
+                }
+
+                &:last-child {
+                    border: 2px solid $color-red;
+
+                    svg {
+                        fill: $color-red;
+                    }
+                }
+
+                p {
+                    width: 100%;
+                    text-align: center;
+                    font-weight: bold;
+                    font-size: $text-md;
+                }
+            }
+        }
+    }
+}
