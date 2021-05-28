@@ -1,0 +1,35 @@
+.form {
+    textarea {
+        max-width: 100%;
+        resize: none;
+        font-family: 'lato';
+
+        &::placeholder {
+            font-style: italic;
+        }
+    }
+
+    &__item {
+        display: flex;
+        flex-wrap: wrap;
+
+        &--label {
+            color: $color-black-light;
+            width: 100%;
+            margin-bottom: $spacing-sm;
+        }
+        
+        &--input {
+            margin-bottom: $spacing-base;
+            width: 100%;
+            padding: $spacing-sm;
+            border: none;
+            box-shadow: $shadow-box;
+            border-radius: $radius-sm;
+
+            &::placeholder {
+                font-style: italic;
+            }
+        }
+    }
+}

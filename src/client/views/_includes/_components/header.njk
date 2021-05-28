@@ -1,7 +1,9 @@
 <header class="header">
     {% include "_components/nav.njk" %}
 
+    {% if page.url === '/' %}
     <div class="header__banner">
         <h1>Promos</h1>
     </div>
+    {% endif %}
 </header>

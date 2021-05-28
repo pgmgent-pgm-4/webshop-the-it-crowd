@@ -34,11 +34,13 @@
   'components/icon',
   'components/input',
   'components/nav.scss',
-  'components/story.scss';
+  'components/story.scss',
+  'components/forms.scss';
 
 // 6. Page-specific styles
 @import
-  'pages/home.scss';
+  'pages/home.scss',
+  'pages/contact';
 
 // 7. Themes
 @import

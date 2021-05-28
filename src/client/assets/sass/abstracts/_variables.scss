@@ -2,11 +2,12 @@
 $color-primary: #415E46;
 $color-green-light: #EEF2EE;
 $color-green-accent: #40C479;
+$color-green-btn: #009063;
 
 $color-bg: #F9F9F9;
 $color-white: #ffff;
 
-$color-black: #0000;
+$color-black: #000000;
 $color-black-light: #000000c9;
 
 $color-info: #257C81;
@@ -43,3 +44,6 @@ $spacing-ml: 2rem;
 $spacing-lg: 2.5rem;
 $spacing-xl: 4rem;
 $spacing-xxl: 6rem;
+
+// Shadow
+$shadow-box: 6px 10px 31px 0px rgb(170, 170, 170);
