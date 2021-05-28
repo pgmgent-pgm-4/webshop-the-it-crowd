@@ -6,6 +6,8 @@
     <div class="story__content">
         <h2>Our story</h2>
         <p>Here at Plant-It, we value the wishes and needs of our customers. However, we don't stop there, we're also on a mission to cultivate the best plants we can, and doing so while maintaining a healthy environment for our plants.</p>
-        <a href="../contact">Read more</a>
+        {% if page.url === '/' %}
+            <a href="../about">Read more</a>
+        {% endif %}
     </div>
 </section>
