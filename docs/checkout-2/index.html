@@ -79,63 +79,66 @@
 
     <main class="container">
         
-<article class="product">
-    <h2>Product overview > <span>Delivery data and payment</span></h2>
-    
-    <section class="product__top">
-        <div class="product__top__card">
-            <figure class="product__top__card--img">
-                <img src="../assets/img/plant-card.png">
-            </figure>
+<article class="delivery">
+    <h2><span>Product overview</span> > Delivery data and payment</h2>
 
-            <section class="product__top__card--content">
-                <div class="product__top__card--content__top">
-                    <div>
-                        <h3>Montsera</h3>
-                        <span>X</span>
-                    </div>
-
-                    <div>
-                        <p>Plant: <span>Montsera</span></p>
-                        <span>€85</span>
-                    </div>
-
-                    <div>
-                        <p>Pot: <span>Ceramic</span></p>
-                        <span>€5</span>
-                    </div>
-                </div>
-
-                <div class="product__top__card--content__bottom">
-                    <input type="number" value="1" min="1" max="100">
-                    <span>€90</span>
-                </div>
-            </section>
-        </div>
-
-        <div class="product__top__overview">
-            <div class="product__top__overview--top">
+    <article class="delivery__container">
+        <section class="delivery__container__overview">
+            <div class="delivery__container__overview--top">
+                <h3>Overview</h3>
                 <div>
+                    <p>Items</p>
+                    <p>€90</p>
+                </div>
+
+                <div class="delivery__container__overview--top__item-list">
                     <p>Montsera</p>
-                    <p>€85</p>
+                    <p>€90</p>
                 </div>
 
                 <div>
-                    <p>Shipping costs</p>
+                    <p>Delivery fee</p>
                     <p>€5</p>
                 </div>
             </div>
 
-            <div class="product__top__overview--bottom">
-                <p>Subtotaal</p>
-                <p>€90</p>
+            <div class="delivery__container__overview--bottom">
+                <form>
+                    <label>Promo code</label>
+                    <input for="text">
+                </form>
+                <div>
+                    <p class="delivery__container__overview--bottom__total">Total</p>
+                    <p>€95</p>
+                </div>
             </div>
-            
-            <a href="../checkout-2">
-                <button class="button--primary">Continue</button>
-            </a>
-        </div>
-    </section>
+        </section>
+
+        <section class="delivery__container__details">
+            <h2>Delivery Adress</h2>
+            <div class="delivery__container__detail__item">
+                <h3>Home adress</h3>
+                <p>Bram Criel</p>
+                <p>Brandstraat 35c</p>
+                <p>Beervelde</p>
+            </div>
+
+            <div class="delivery__container__detail__item--alt">
+                <h3>Alternative adress</h3>
+                <p>Bram Criel</p>
+                <p>Brandstraat 35c</p>
+                <p>Beervelde</p>
+            </div>
+
+            <h2>Delivery Date</h2>
+            <div class="delivery__container__detail__item">
+                <h3>2 Days</h3>
+                <p>Montsera</p>
+                <p>Bpost</p>
+                <p>€0.70</p>
+            </div>
+        </section>
+    </article>    
 </article>
     </main>
 
