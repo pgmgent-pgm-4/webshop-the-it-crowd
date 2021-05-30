@@ -5,6 +5,7 @@
  const Database = await (database).getRepository('Product');
  const DbProductsHasCategories = await (database).getRepository('products_has_categories');
  const DbCategories = await (database).getRepository('categories');
+ const DbReviews = await (database).getRepository('reviews');
 
  export const getProduct = async (req, res) => {
     try {
@@ -87,8 +88,22 @@
             //find categories from jointable for this product
             let categories = await DbProductsHasCategories.find({where: {product_id: id }, select: ['category_id']})
             categories.map(cat => {return cat.id = cat.category_id, delete cat.category_id })
-            //find categories from TBLcategories
+            //find reviews from TBLcategories
             product.categories = await DbCategories.find({where : [...categories]})
+          res.status(200).json({ productData: product});
+        } catch({ message }) {
+          res.status(500);
+          res.json({ error: message });
+        }
+      };
+
+      export const getProductByIdAndReviews = async (req, res) => {
+        try {
+            //find product
+            const id = req.params.productsId;
+            let product = await Database.findOne({id})
+            //find reviews from TBLreviews
+            product.reviews = await DbReviews.find({where : {product_id: id}})
           res.status(200).json({ productData: product});
         } catch({ message }) {
           res.status(500);

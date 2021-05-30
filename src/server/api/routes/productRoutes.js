@@ -15,8 +15,10 @@
  router.get('/products', productController.getProduct); // get customers
  router.get('/products/:productsId', productController.getProductById); // get customers
  router.get('/products/:productsId/categories', productController.getProductByIdAndCategories); // get customers
+ router.get('/products/:productsId/reviews', productController.getProductByIdAndReviews); // get customers
  router.post('/products', productController.addProduct); //add customers
  router.put('/products/:productsId', productController.updateProduct); // update customer
  router.delete('/products/:productsId', productController.deleteProduct); //delete customer
 
  export default router;
+ 
