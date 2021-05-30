@@ -3,6 +3,9 @@
  */
  import database from '../../config/ormConfig.js';
  const Database = await (database).getRepository('Order');
+ const DbOrderProducts = await (database).getRepository('order_products');
+ const DbProducts = await (database).getRepository('products');
+ const DbPayments = await (database).getRepository('payments');
 
  export const getOrder = async (req, res) => {
    try {
@@ -52,3 +55,36 @@
      res.status(500).json({ error: message });
    }
  };
+
+ export const getOrderByIdAndProducts = async (req, res) => {
+    try {
+        //find product
+        const id = req.params.ordersId;
+        let order = await Database.findOne({id})
+        //find products from jointable
+        let products = await DbOrderProducts.find({where : {order_id: id}})
+        for (let i = 0; i < products.length; i++) {
+            const product = products[i];
+            product.detail = await DbProducts.findOne({where : {id: product.product_id}})
+        }
+        order.products = products
+      res.status(200).json({ orderData: order});
+    } catch({ message }) {
+      res.status(500);
+      res.json({ error: message });
+    }
+  };
+
+  export const getOrderByIdAndPayments = async (req, res) => {
+    try {
+        //find product
+        const id = req.params.ordersId;
+        let order = await Database.findOne({id})
+        //find reviews from TBLreviews
+        order.payments = await DbPayments.find({where : {order_id: id}})
+      res.status(200).json({ orderData: order});
+    } catch({ message }) {
+      res.status(500);
+      res.json({ error: message });
+    }
+  };

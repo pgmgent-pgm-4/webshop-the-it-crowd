@@ -3,7 +3,6 @@
  */
  import database from '../../config/ormConfig.js';
  const Database = await (database).getRepository('Profile');
- const DbUsers = await (database).getRepository('users');
 
  export const getProfile = async (req, res) => {
    try {
@@ -55,17 +54,3 @@ req.body.modifiedAt = new Date.now();
      res.status(500).json({ error: message });
    }
  };
-
- export const getProfileByIdAndUsers = async (req, res) => {
-    try {
-        //find product
-        const id = req.params.profilesId;
-        let profile = await Database.findOne({id})
-        //find reviews from TBLreviews
-        profile.users = await DbUsers.find({where : {id: profile.user_id}})
-      res.status(200).json({ profileData: profile});
-    } catch({ message }) {
-      res.status(500);
-      res.json({ error: message });
-    }
-  };

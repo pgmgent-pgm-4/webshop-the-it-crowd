@@ -6,6 +6,8 @@
  const DbProductsHasCategories = await (database).getRepository('products_has_categories');
  const DbCategories = await (database).getRepository('categories');
  const DbReviews = await (database).getRepository('reviews');
+ const DbPromotions = await (database).getRepository('promotions');
+ const DbOrderProducts = await (database).getRepository('order_products');
 
  export const getProduct = async (req, res) => {
     try {
@@ -104,6 +106,34 @@
             let product = await Database.findOne({id})
             //find reviews from TBLreviews
             product.reviews = await DbReviews.find({where : {product_id: id}})
+          res.status(200).json({ productData: product});
+        } catch({ message }) {
+          res.status(500);
+          res.json({ error: message });
+        }
+      };
+
+      export const getProductByIdAndPromotions = async (req, res) => {
+        try {
+            //find product
+            const id = req.params.productsId;
+            let product = await Database.findOne({id})
+            //find reviews from TBLreviews
+            product.promotions = await DbPromotions.find({where : {product_id: id}})
+          res.status(200).json({ productData: product});
+        } catch({ message }) {
+          res.status(500);
+          res.json({ error: message });
+        }
+      };
+
+      export const getProductByIdAndOrders = async (req, res) => {
+        try {
+            //find product
+            const id = req.params.productsId;
+            let product = await Database.findOne({id})
+            //find reviews from TBLreviews
+            product.orders = await DbOrderProducts.find({where : {product_id: id}})
           res.status(200).json({ productData: product});
         } catch({ message }) {
           res.status(500);
