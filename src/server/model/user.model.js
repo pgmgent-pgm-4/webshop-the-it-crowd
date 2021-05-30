@@ -48,6 +48,10 @@ export default new EntitySchema({
         "orders": {
             target: "orders",
             type: "one-to-many"
+        },
+        "profiles": {
+            target: "profiles",
+            type: "one-to-one"
         }
     }
 });

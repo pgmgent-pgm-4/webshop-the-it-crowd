@@ -4,6 +4,10 @@
 
  import database from '../../config/ormConfig.js';
  const Database = await (database).getRepository('User');
+ const DbReviews = await (database).getRepository('reviews');
+ const DbOrders = await (database).getRepository('orders');
+ const DbProfiles = await (database).getRepository('profiles');
+ const DbPayments = await (database).getRepository('payments');
 
  import bcrypt from 'bcrypt';
  import dotenv from 'dotenv';
@@ -61,3 +65,59 @@
      res.status(500).json({ error: message });
    }
  };
+
+ export const getUserByIdAndReviews = async (req, res) => {
+    try {
+        //find product
+        const id = req.params.usersId;
+        let user = await Database.findOne({id})
+        //find reviews from TBLreviews
+        user.reviews = await DbReviews.find({where : {user_id: id}})
+      res.status(200).json({ userData: user});
+    } catch({ message }) {
+      res.status(500);
+      res.json({ error: message });
+    }
+  };
+
+  export const getUserByIdAndProfiles = async (req, res) => {
+    try {
+        //find product
+        const id = req.params.usersId;
+        let user = await Database.findOne({id})
+        //find reviews from TBLreviews
+        user.profiles = await DbProfiles.find({where : {user_id: id}})
+      res.status(200).json({ userData: user});
+    } catch({ message }) {
+      res.status(500);
+      res.json({ error: message });
+    }
+  };
+
+  export const getUserByIdAndOrders = async (req, res) => {
+    try {
+        //find product
+        const id = req.params.usersId;
+        let user = await Database.findOne({id})
+        //find reviews from TBLreviews
+        user.orders = await DbOrders.find({where : {user_id: id}})
+      res.status(200).json({ userData: user});
+    } catch({ message }) {
+      res.status(500);
+      res.json({ error: message });
+    }
+  };
+  
+  export const getUserByIdAndPayments = async (req, res) => {
+    try {
+        //find product
+        const id = req.params.usersId;
+        let user = await Database.findOne({id})
+        //find reviews from TBLreviews
+        user.payments = await DbPayments.find({where : {user_id: id}})
+      res.status(200).json({ userData: user});
+    } catch({ message }) {
+      res.status(500);
+      res.json({ error: message });
+    }
+  };

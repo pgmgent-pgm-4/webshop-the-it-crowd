@@ -52,6 +52,10 @@ export default new EntitySchema({
         "products_has_categories": {
             target: "products_has_categories",
             type: 'one-to-many'
+        },
+        "promotions": {
+            target: 'promotions',
+            type: "one-to-many"
         }
     }
 });
