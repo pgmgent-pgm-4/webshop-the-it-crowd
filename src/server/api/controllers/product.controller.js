@@ -1,7 +1,8 @@
 /**
  * All the CRUD endpoint actions together
  */
- import database from '../../config/ormConfig.js';
+ import { In } from 'typeorm';
+import database from '../../config/ormConfig.js';
  const Database = await (database).getRepository('Product');
  const DbProductsHasCategories = await (database).getRepository('products_has_categories');
  const DbCategories = await (database).getRepository('categories');
@@ -93,6 +94,29 @@
             //find reviews from TBLcategories
             product.categories = await DbCategories.find({where : [...categories]})
           res.status(200).json({ productData: product});
+        } catch({ message }) {
+          res.status(500);
+          res.json({ error: message });
+        }
+      };
+
+      export const getProductByCategories = async (req, res) => {
+        try {
+            //get the requested categories (id)
+            let {categoryList} = req.body
+            //find products that have one of the category ids
+            let productsList = await DbProductsHasCategories.find({where: {category_id: In(categoryList) }, select: ['product_id']})
+            //convert array with objects to array with values
+            let productsListCleaned = []
+            for (let i = 0; i < productsList.length; i++) {
+                const productItem = productsList[i].product_id;
+               if (!productsListCleaned.includes(productItem)) {
+                productsListCleaned.push(productItem)
+               }
+            }
+            //find the products using array with product ids
+            let products = await Database.find({where: {id: In(productsListCleaned)}})
+          res.status(200).json({ productData: products});
         } catch({ message }) {
           res.status(500);
           res.json({ error: message });

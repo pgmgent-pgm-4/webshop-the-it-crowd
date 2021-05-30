@@ -71,3 +71,5 @@ const DbProductsHasCategories = await (database).getRepository('products_has_cat
             res.json({ error: message });
         }
     };
+
+    

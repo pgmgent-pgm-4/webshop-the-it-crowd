@@ -13,7 +13,7 @@
   * Router for customers
   */
  router.get('/products', productController.getProduct); // get customers
- router.get('/products/:productsId', productController.getProductById); // get customers
+ router.get('/products/categories', productController.getProductByCategories); // get customers
  router.get('/products/:productsId/categories', productController.getProductByIdAndCategories); // get customers
  router.get('/products/:productsId/reviews', productController.getProductByIdAndReviews); // get customers
  router.get('/products/:productsId/promotions', productController.getProductByIdAndPromotions); // get customers
