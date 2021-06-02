@@ -12,11 +12,11 @@
  /**
   * Router for customers
   */
- router.get('/profiles', profileController.getProfile); // get customers
- router.get('/profiles/:profilesId', profileController.getProfileById); // get customers
- router.post('/profiles', profileController.addProfile); //add customers
- router.put('/profiles/:profilesId', profileController.updateProfile); // update customer
- router.delete('/profiles/:profilesId', profileController.deleteProfile); //delete customer
+//  router.get('/profiles', profileController.getProfile); // get customers
+//  router.get('/profiles/:profilesId', profileController.getProfileById); // get customers
+//  router.post('/profiles', profileController.addProfile); //add customers
+//  router.put('/profiles/:profilesId', profileController.updateProfile); // update customer
+//  router.delete('/profiles/:profilesId', profileController.deleteProfile); //delete customer
 
  export default router;
  

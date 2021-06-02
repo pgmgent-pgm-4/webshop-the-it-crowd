@@ -49,10 +49,27 @@ export default new EntitySchema({
             target: "order_products",
             type: "one-to-many"
         },
-        "products_has_categories": {
-            target: "products_has_categories",
-            type: 'one-to-many'
+        "categories": {
+            type: 'one-to-many',
+            target: 'products_has_categories',
+            // joinColumn: [
+            //     { name: "id",
+            //      referencedColumnName: "product_id" }
+            // ]
+            joinTable: {
+                name: "products_has_categories", // table name for the junction table of this relation
+                joinColumn: {
+                    name: "product_id",
+                    referencedColumnName: "id"
+                }
+            }
         },
+        // "categories": {
+        //     type: "many-to-many",
+        //     target: 'categories',
+        //     joinTable: true,
+        //     cascade: true
+        // },
         "promotions": {
             target: 'promotions',
             type: "one-to-many"

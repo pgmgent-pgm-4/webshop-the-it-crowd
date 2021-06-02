@@ -6,7 +6,7 @@ import passportLocal from 'passport-local';
 const LocalStrategy = passportLocal.Strategy;
 
 
-import UserDb from '../User/index.js';
+import UserDb from '../User/index.js.js.js';
 const userData = new UserDb();
 
 import bcrypt from 'bcrypt';

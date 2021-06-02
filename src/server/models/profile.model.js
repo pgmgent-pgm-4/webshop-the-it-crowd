@@ -43,13 +43,12 @@ export default new EntitySchema({
         modifiedAt: {
              type: "int",
              nullable: true
-        },
-        user_id: {
-            type: 'int',
-            nullable: false
         }
     },
     relations: {
-
+        "users": {
+            target: "users",
+            type: "one-to-one"
+        }
     }
 });

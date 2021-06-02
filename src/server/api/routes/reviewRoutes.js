@@ -12,10 +12,10 @@
  /**
   * Router for customers
   */
- router.get('/reviews', reviewController.getReview); // get customers
- router.get('/reviews/:reviewsId', reviewController.getReviewById); // get customers
- router.post('/reviews', reviewController.addReview); //add customers
- router.put('/reviews/:reviewsId', reviewController.updateReview); // update customer
- router.delete('/reviews/:reviewsId', reviewController.deleteReview); //delete customer
+//  router.get('/reviews', reviewController.getReview); // get customers
+//  router.get('/reviews/:reviewsId', reviewController.getReviewById); // get customers
+//  router.post('/reviews', reviewController.addReview); //add customers
+//  router.put('/reviews/:reviewsId', reviewController.updateReview); // update customer
+//  router.delete('/reviews/:reviewsId', reviewController.deleteReview); //delete customer
 
  export default router;
