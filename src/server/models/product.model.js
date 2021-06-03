@@ -3,12 +3,27 @@ import { Model, DataTypes, DECIMAL } from 'sequelize';
 export default (sequelize) => {
   class Product extends Model {
     static associate(models) {
-      this.belongsTo(models.Category, { foreignKey: 'categoryId' });
-      this.belongsToMany(models.Tag, {
-        through: 'ProductsHasTags',
-        as: 'tags',
-        foreignKey: 'tagId',
-      });
+        this.hasMany(models.ProductCategory, { 
+            as: 'ProductCategory',
+            foreignKey: 'productId' 
+            });
+        this.hasMany(models.Promotion, { 
+            as: 'promotion',
+            foreignKey: 'productId' 
+            });
+        this.hasMany(models.OrderProduct, { 
+            as: 'OrderProduct',
+            foreignKey: 'productId' 
+            });
+        this.hasMany(models.Review, { 
+            as: 'review',
+            foreignKey: 'productId' 
+            });
+        this.belongsToMany(models.Tag, {
+            through: 'ProductsHasTags',
+            as: 'tag',
+            foreignKey: 'tagId',
+        });
     }
   }
 

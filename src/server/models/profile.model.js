@@ -7,6 +7,18 @@ export default (sequelize) => {
         as: 'user',
         foreignKey: 'profileId',
       });
+      this.hasMany(models.Payment, {
+        as: "payment", 
+        foreignKey: 'profileId'
+    });
+    this.hasMany(models.Review, {
+        as: "review", 
+        foreignKey: 'profileId'
+    });
+    this.hasMany(models.Order, {
+        as: "order", 
+        foreignKey: 'profileId'
+    });
     }
   }
 

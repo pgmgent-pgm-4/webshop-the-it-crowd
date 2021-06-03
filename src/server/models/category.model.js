@@ -3,8 +3,8 @@ import { Model, DataTypes } from 'sequelize';
 export default (sequelize) => {
   class Category extends Model {
     static associate(models) {
-      this.hasMany(models.Product, {
-        as: 'products',
+      this.hasMany(models.ProductCategory, {
+        as: 'ProductCategory',
         foreignKey: 'categoryId',
       });
     }
@@ -12,12 +12,16 @@ export default (sequelize) => {
 
   Category.init(
     {
-      name: DataTypes.STRING,
-      description: DataTypes.TEXT,
+      name: {
+          type: DataTypes.STRING
+        },
+      description: {
+          type: DataTypes.TEXT
+        }
     },
     {
       sequelize,
-      modelName: 'Category',
+      modelName: 'Category', 
     },
   );
 
