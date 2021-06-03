@@ -1,7 +1,7 @@
 import { Model, DataTypes } from 'sequelize';
 
 export default (sequelize) => {
-  class Profile extends Model {
+  class OrderProduct extends Model {
     static associate(models) {
       this.hasOne(models.User, {
         as: 'user',
@@ -10,16 +10,18 @@ export default (sequelize) => {
     }
   }
 
-  Profile.init(
+  OrderProduct.init(
     {
-      firstName: DataTypes.STRING,
-      lastName: DataTypes.STRING,
+        productPrice: DataTypes.FLOAT,
+        productAmount: DataTypes.FLOAT,
+
+       
     },
     {
       sequelize,
-      modelName: 'Profile',
+      modelName: 'OrderProduct',
     },
   );
 
-  return Profile;
+  return OrderProduct;
 };

@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "plant webshop ecommerce",
   "main": "src/server/app.js",
-  "type": "module",
   "scripts": {
     "dev": "cross-env NODE_ENV=development HOSTNAME=localhost PORT=8080 nodemon --exec babel-node -e js,html,nj server/app.js --watch server/*",
     "lint": "cross-env NODE_ENV=lint eslint . --ext .js --fix",

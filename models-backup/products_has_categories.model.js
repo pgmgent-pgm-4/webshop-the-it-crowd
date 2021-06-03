@@ -14,11 +14,6 @@ export default new EntitySchema({
            type: 'int',
            nullable: false,
            primary: true
-       },
-       price: {
-           type: 'int',
-           nullable: true,
-           primary: false
        }
     },
     relations: {

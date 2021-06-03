@@ -1,44 +1,22 @@
-import {
-    EntitySchema
-} from 'typeorm'
+import { Model, DataTypes } from 'sequelize';
 
-export default new EntitySchema({
-    name: "Promotion", // Will use table name `post` as default behaviour.
-    tableName: "promotions", // Optional: Provide `tableName` property to override the default behaviour for table name. 
-    columns: {
-        id: {
-            primary: true,
-            type: "int",
-            generated: true
-        },
-        promoCode: {
-            type: "varchar",
-            nullable: false,
-            unique: true
-        },
-        value: {
-            type: "text",
-            nullable: false
-        },
-        fromDate: {
-            type: "int"
-        },
-        toDate: {
-            type: "int"
-        },
-        createdAt: {
-            type: "int"
-        },
-        modifiedAt: {
-            type: "int",
-            nullable: true
-        },
-        product_id: {
-            type: 'int',
-            nullable: false
-        }
-    },
-    relations: {
-
+export default (sequelize) => {
+  class Promotion extends Model {
+    static associate(models) {
+      this.belongsTo(models.Profile, { foreignKey: 'profileId' });
     }
-});
+  }
+
+  Promotion.init(
+    {
+      promoCode: DataTypes.INTEGER,
+      value: DataTypes.FLOAT,
+    },
+    {
+      sequelize,
+      modelName: 'Promotion',
+    },
+  );
+
+  return Promotion;
+};

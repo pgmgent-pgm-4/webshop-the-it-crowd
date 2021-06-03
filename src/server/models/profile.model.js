@@ -1,54 +1,32 @@
+import { Model, DataTypes } from 'sequelize';
 
-import {EntitySchema} from 'typeorm'
-
-export default new EntitySchema({
-    name: "Profile", // Will use table name `post` as default behaviour.
-    tableName: "profiles", // Optional: Provide `tableName` property to override the default behaviour for table name. 
-    columns: {
-        id: {
-            primary: true,
-            type: "int",
-            generated: true
-        },
-        firstName: {
-            type: "varchar"
-        },
-        lastName: {
-            type: "varchar"
-        },
-        photo: {
-            type:"text" 
-        },
-        dob: {
-            type: "int",
-        },
-        street: {
-            type: "varchar"
-        },
-        streetNr: {
-            type: "varchar"
-        },
-        country: {
-            type: "varchar"
-        },
-        city: {
-            type: "varchar"
-        },
-        zipCode: {
-            type: "varchar"
-        },
-        createdAt: {
-             type: "int"
-        },
-        modifiedAt: {
-             type: "int",
-             nullable: true
-        }
-    },
-    relations: {
-        "users": {
-            target: "users",
-            type: "one-to-one"
-        }
+export default (sequelize) => {
+  class Profile extends Model {
+    static associate(models) {
+      this.hasOne(models.User, {
+        as: 'user',
+        foreignKey: 'profileId',
+      });
     }
-});
+  }
+
+  Profile.init(
+    {
+      firstName: DataTypes.STRING,
+      lastName: DataTypes.STRING,
+      photo: DataTypes.STRING,
+      dob: DataTypes.INTEGER,
+      street: DataTypes.CHAR,
+      streetNr: DataTypes.CHAR,
+      country: DataTypes.CHAR,
+      city: DataTypes.CHAR,
+      zipCode: DataTypes.CHAR,
+    },
+    {
+      sequelize,
+      modelName: 'Profile',
+    },
+  );
+
+  return Profile;
+};

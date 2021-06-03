@@ -1,26 +1,23 @@
 import { Model, DataTypes } from 'sequelize';
 
 export default (sequelize) => {
-  class ProjectAsset extends Model {
+  class ProductCategory extends Model {
     static associate(models) {
-      this.belongsTo(models.Project, {
-        as: 'project',
+      this.belongsTo(models.Product, {
+        as: 'product'
       });
     }
   }
 
-  ProjectAsset.init(
+  ProductCategory.init(
     {
-      caption: DataTypes.TEXT,
-      type: DataTypes.STRING,
-      reference: DataTypes.STRING,
-      order: DataTypes.INTEGER,
+
     },
     {
       sequelize,
-      modelName: 'ProjectAsset',
+      modelName: 'ProductCategory',
     },
   );
 
-  return ProjectAsset;
+  return ProductCategory;
 };
