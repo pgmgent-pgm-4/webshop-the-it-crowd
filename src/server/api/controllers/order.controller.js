@@ -1,90 +1,133 @@
-// /**
-//  * All the CRUD endpoint actions together
-//  */
-//  import database from '../../config/ormConfig.js';
-//  const Database = await (database).getRepository('Order');
-//  const DbOrderProducts = await (database).getRepository('order_products');
-//  const DbProducts = await (database).getRepository('products');
-//  const DbPayments = await (database).getRepository('payments');
+import { convertArrayToPagedObject, handleHTTPError, HTTPError } from '../../utils';
+import database from '../../database';
 
-//  export const getOrder = async (req, res) => {
-//    try {
-//      res.status(200).json({ orderData: await Database.find() });
-//    } catch({ message }) {
-//      res.status(500);
-//      res.json({ error: message });
-//    }
-//  };
+/*
+Get all orders
+*/
+const getOrders = async (req, res, next) => {
+	try {
+		// Get query parameters
+		const { itemsPerPage, currentPage } = req.query;
 
-//  export const getOrderById = async (req, res) => {
-//     try {
-//         const id = req.params.ordersId;
-//       res.status(200).json({ orderData: await Database.findOne({id}) });
-//     } catch({ message }) {
-//       res.status(500);
-//       res.json({ error: message });
-//     }
-//   };
- 
-//  export const addOrder = async (req, res) => {
-//    try {
-//     req.body.createdAt = new Date.now();
-//      res.status(201).json({ orderData: await Database.save(req.body) });
-//    } catch({ message }) {
-//      res.status(500).json({ error: message });
-//    }
-//  };
+		// Get orders from database
+		let orders = null;
+		if (itemsPerPage && currentPage) {
+			orders = await database.Order.findAll({
+				offset: (currentPage - 1) * itemsPerPage,
+				limit: itemsPerPage,
+			});
+			orders = convertArrayToPagedObject(orders, itemsPerPage, currentPage, await database.Order.count());
+		} else {
+			orders = await database.Order.findAll();
+		}
 
-//  export const updateOrder = async (req, res) => {
-//    try {
-//      const id = req.params.ordersId;
-//      res.status(200).json({ orderData: await Database.update({id}, req.body) });
-//    }
-//    catch({ message }) {
-//      res.status(500).json({ error: message });
-//    }
-//  };
- 
-//  export const deleteOrder = async (req, res) => {
-//    try {
-//     const id = req.params.ordersId;
-//      await Database.delete({id});
-//      res.status(204).end();
-//    }
-//    catch({ message }) {
-//      res.status(500).json({ error: message });
-//    }
-//  };
+    
 
-//  export const getOrderByIdAndProducts = async (req, res) => {
-//     try {
-//         //find product
-//         const id = req.params.ordersId;
-//         let order = await Database.findOne({id})
-//         //find products from jointable
-//         let products = await DbOrderProducts.find({where : {order_id: id}})
-//         for (let i = 0; i < products.length; i++) {
-//             const product = products[i];
-//             product.detail = await DbProducts.findOne({where : {id: product.product_id}})
-//         }
-//         order.products = products
-//       res.status(200).json({ orderData: order});
-//     } catch({ message }) {
-//       res.status(500);
-//       res.json({ error: message });
-//     }
-//   };
+    if (!orders || orders.length === 0) {
+      throw new HTTPError(`Could not found orders!`, 404);
+    }
 
-//   export const getOrderByIdAndPayments = async (req, res) => {
-//     try {
-//         //find product
-//         const id = req.params.ordersId;
-//         let order = await Database.findOne({id})
-//         //find reviews from TBLreviews
-//         order.payments = await DbPayments.find({where : {order_id: id}})
-//       res.status(200).json({ orderData: order});
-//     } catch({ message }) {
-//       res.status(500);
-//       res.json({ error: message });
-//     }
-//   };
+		// Send response
+		res.status(200).json(orders);
+	} catch (error) {
+		handleHTTPError(error, next);
+	}
+};
+
+/*
+Get a specific order
+*/
+const getOrderById = async (req, res, next) => {
+	try {
+		// Get orderId parameter
+		const { orderId } = req.params;
+		// Get specific order from database
+		const order = await database.Order.findByPk(orderId);
+
+		if (order === null) {
+			throw new HTTPError(`Could not found the order with id ${orderId}!`, 404);
+		}
+		// Send response
+		res.status(200).json(order);
+	} catch (error) {
+		handleHTTPError(error, next);
+	}
+};
+
+/*
+Create a new order
+*/
+const createOrder = async (req, res, next) => {
+	try {
+		// Get body from response
+		const model = req.body;
+		// Create a post
+		const createdModel = await database.Order.create(model);
+		// Send response
+		res.status(201).json(createdModel);
+	} catch (error) {
+		handleHTTPError(error, next);
+	}
+};
+
+/*
+Update an exisiting order
+*/
+const updateOrder = async (req, res, next) => {
+	try {
+		// Get orderId parameter
+		const { orderId } = req.params;
+		console.log(orderId);
+		// Get specific order from database
+		const order = await database.Order.findByPk(orderId);
+
+		if (order === null) {
+			throw new HTTPError(`Could not found the order with id ${orderId}!`, 404);
+		}
+
+		// Update a specific post
+		const model = req.body;
+		const updatedPost = await database.Order.update(model, {
+			where: {
+				id: orderId,
+			},
+		});
+
+		// Send response
+		res.status(200).json(updatedPost);
+	} catch (error) {
+		handleHTTPError(error, next);
+	}
+};
+
+/*
+Delete an exisiting order
+*/
+const deleteOrder = async (req, res, next) => {
+	try {
+		// Get orderId parameter
+		const { orderId } = req.params;
+		// Get specific order from database
+		const order = await database.Order.findByPk(orderId);
+
+		if (order === null) {
+			throw new HTTPError(`Could not found the order with id ${orderId}!`, 404);
+		}
+
+		// Delete a order with specified id
+		const message = await database.Order.destroy({
+			where: {
+				id: orderId,
+			},
+		});
+
+		// Send response
+		res.status(200).json(message);
+	} catch (error) {
+		handleHTTPError(error, next);
+	}
+};
+
+export {
+	createOrder, deleteOrder, getOrderById, getOrders, updateOrder,
+};

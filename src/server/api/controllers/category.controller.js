@@ -1,75 +1,147 @@
-// /**
-//  * All the CRUD endpoint actions together
-//  */
-// import database from '../../config/ormConfig.js';
-// const Database = await (database).getRepository('Category');
-// const DbProducts = await (database).getRepository('products');
-// const DbProductsHasCategories = await (database).getRepository('products_has_categories');
+import { convertArrayToPagedObject, handleHTTPError, HTTPError } from '../../utils';
+import database from '../../database';
 
-//  export const getCategory = async (req, res) => {
-//    try {
-//      res.status(200).json({ category: await Database.find() });
-//    } catch({ message }) {
-//      res.status(500);
-//      res.json({ error: message });
-//    }
-//  };
+/*
+Get all categories
+*/
+const getCategories = async (req, res, next) => {
+	try {
+		// Get query parameters
+		const { itemsPerPage, currentPage } = req.query;
 
- 
-//  export const addCategory = async (req, res) => {
-//      try {
-//          res.status(201).json({ category: await Database.save( req.body ) });
-//         } catch({ message }) {
-//             res.status(500).json({ error: message });
-//         }
-//     };
-    
-//     export const updateCategory = async (req, res) => {
-//         try {
-//             const id = req.params.categoriesId;
-//             res.status(200).json({ category: await Database.update({id},  req.body ) });
-//         }
-//         catch({ message }) {
-//             res.status(500).json({ error: message });
-//         }
-//     };
-    
-//     export const deleteCategory = async (req, res) => {
-//         try {
-//             const id = req.params.categoriesId;
-//             await Database.delete({id});
-//             res.status(204).end();
-//         }
-//         catch({ message }) {
-//             res.status(500).json({ error: message });
-//         }
-//     };
-
-//     export const getCategoryById = async (req, res) => {
-//        try {
-//            const id = req.params.categoriesId;
-//          res.status(200).json({ category: await Database.findOne({ id }) });
-//        } catch({ message }) {
-//          res.status(500);
-//          res.json({ error: message });
-//        }
-//      };
-    
-//     export const getCategoryByIdAndproducts = async (req, res) => {
-//         try {
-//             //find category
-//             const id = req.params.categoriesId;
-//             let category = await Database.findOne({id})
-//             //find products from jointable for this category
-//             let products = await DbProductsHasCategories.find({where: {category_id: id }, select: ['product_id']})
-//             products.map(product => {return product.id = product.product_id, delete product.product_id })
-//             //find reviews from TBLcategories
-//             category.products = await DbProducts.find({where : [...products]})
-//             res.status(200).json({ categoryData: category});
-//         } catch({ message }) {
-//             res.status(500);
-//             res.json({ error: message });
-//         }
-//     };
+		// Get categories from database
+		let categories = null;
+		if (itemsPerPage && currentPage) {
+			categories = await database.Category.findAll({
+				offset: (currentPage - 1) * itemsPerPage,
+				limit: itemsPerPage,
+			});
+			categories = convertArrayToPagedObject(categories, itemsPerPage, currentPage, await database.Category.count());
+		} else {
+			categories = await database.Category.findAll({
+                include: [
+                   { 
+                       model: database.ProductCategory,
+                       as: 'ProductCategory',
+                       include: [
+                           {
+                            model: database.Product,
+                            as: 'product',
+                           }
+                       ]
+                    }
+                ]
+            });
+		}
 
     
+
+    if (!categories || categories.length === 0) {
+      throw new HTTPError(`Could not found categories!`, 404);
+    }
+
+		// Send response
+		res.status(200).json(categories);
+	} catch (error) {
+		handleHTTPError(error, next);
+	}
+};
+
+/*
+Get a specific category
+*/
+const getCategoryById = async (req, res, next) => {
+	try {
+		// Get categoryId parameter
+		const { categoryId } = req.params;
+		// Get specific category from database
+		const category = await database.Category.findByPk(categoryId);
+
+		if (category === null) {
+			throw new HTTPError(`Could not found the category with id ${categoryId}!`, 404);
+		}
+		// Send response
+		res.status(200).json(category);
+	} catch (error) {
+		handleHTTPError(error, next);
+	}
+};
+
+/*
+Create a new category
+*/
+const createCategory = async (req, res, next) => {
+	try {
+		// Get body from response
+		const model = req.body;
+        console.log('model:::', model);
+		// Create a post
+		const createdModel = await database.Category.create(model);
+		// Send response
+		res.status(201).json(createdModel);
+	} catch (error) {
+		handleHTTPError(error, next);
+	}
+};
+
+/*
+Update an exisiting category
+*/
+const updateCategory = async (req, res, next) => {
+	try {
+		// Get categoryId parameter
+		const { categoryId } = req.params;
+		console.log(categoryId);
+		// Get specific category from database
+		const category = await database.Category.findByPk(categoryId);
+
+		if (category === null) {
+			throw new HTTPError(`Could not found the category with id ${categoryId}!`, 404);
+		}
+
+		// Update a specific post
+		const model = req.body;
+		const updatedPost = await database.Category.update(model, {
+			where: {
+				id: categoryId,
+			},
+		});
+
+		// Send response
+		res.status(200).json(updatedPost);
+	} catch (error) {
+		handleHTTPError(error, next);
+	}
+};
+
+/*
+Delete an exisiting category
+*/
+const deleteCategory = async (req, res, next) => {
+	try {
+		// Get categoryId parameter
+		const { categoryId } = req.params;
+		// Get specific category from database
+		const category = await database.Category.findByPk(categoryId);
+
+		if (category === null) {
+			throw new HTTPError(`Could not found the category with id ${categoryId}!`, 404);
+		}
+
+		// Delete a category with specified id
+		const message = await database.Category.destroy({
+			where: {
+				id: categoryId,
+			},
+		});
+
+		// Send response
+		res.status(200).json(message);
+	} catch (error) {
+		handleHTTPError(error, next);
+	}
+};
+
+export {
+	createCategory, deleteCategory, getCategoryById, getCategories, updateCategory,
+};

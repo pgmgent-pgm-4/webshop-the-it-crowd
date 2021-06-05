@@ -1,56 +1,133 @@
-// /**
-//  * All the CRUD endpoint actions together
-//  */
-//  import database from '../../config/ormConfig.js';
-//  const Database = await (database).getRepository('Profile');
+import { convertArrayToPagedObject, handleHTTPError, HTTPError } from '../../utils';
+import database from '../../database';
 
-//  export const getProfile = async (req, res) => {
-//    try {
-//      res.status(200).json({ profile: await Database.find() });
-//    } catch({ message }) {
-//      res.status(500);
-//      res.json({ error: message });
-//    }
-//  };
+/*
+Get all profiles
+*/
+const getProfiles = async (req, res, next) => {
+	try {
+		// Get query parameters
+		const { itemsPerPage, currentPage } = req.query;
 
-//  export const getProfileById = async (req, res) => {
-//     try {
-//         const id = req.params.profilesId;
-//       res.status(200).json({ profile: await Database.findOne({id}) });
-//     } catch({ message }) {
-//       res.status(500);
-//       res.json({ error: message });
-//     }
-//   };
- 
-//  export const addProfile = async (req, res) => {
-//    try {
-// req.body.createdAt = new Date.now();
+		// Get profiles from database
+		let profiles = null;
+		if (itemsPerPage && currentPage) {
+			profiles = await database.Profile.findAll({
+				offset: (currentPage - 1) * itemsPerPage,
+				limit: itemsPerPage,
+			});
+			profiles = convertArrayToPagedObject(profiles, itemsPerPage, currentPage, await database.Profile.count());
+		} else {
+			profiles = await database.Profile.findAll();
+		}
 
-//      res.status(201).json({ profile:  await Database.save( req.body ) });
-//    } catch({ message }) {
-//      res.status(500).json({ error: message });
-//    }
-//  };
+    
 
-//  export const updateProfile = async (req, res) => {
-//    try {
-// req.body.modifiedAt = new Date.now();
-//     const id = req.params.profilesId;
-//      res.status(200).json({ profile: await Database.update({id}, req.body) });
-//    }
-//    catch({ message }) {
-//      res.status(500).json({ error: message });
-//    }
-//  };
- 
-//  export const deleteProfile = async (req, res) => {
-//    try {
-//     const id = req.params.profilesId;
-//      await Database.delete({id});
-//      res.status(204).end();
-//    }
-//    catch({ message }) {
-//      res.status(500).json({ error: message });
-//    }
-//  };
+    if (!profiles || profiles.length === 0) {
+      throw new HTTPError(`Could not found profiles!`, 404);
+    }
+
+		// Send response
+		res.status(200).json(profiles);
+	} catch (error) {
+		handleHTTPError(error, next);
+	}
+};
+
+/*
+Get a specific profile
+*/
+const getProfileById = async (req, res, next) => {
+	try {
+		// Get profileId parameter
+		const { profileId } = req.params;
+		// Get specific profile from database
+		const profile = await database.Profile.findByPk(profileId);
+
+		if (profile === null) {
+			throw new HTTPError(`Could not found the profile with id ${profileId}!`, 404);
+		}
+		// Send response
+		res.status(200).json(profile);
+	} catch (error) {
+		handleHTTPError(error, next);
+	}
+};
+
+/*
+Create a new profile
+*/
+const createProfile = async (req, res, next) => {
+	try {
+		// Get body from response
+		const model = req.body;
+		// Create a post
+		const createdModel = await database.Profile.create(model);
+		// Send response
+		res.status(201).json(createdModel);
+	} catch (error) {
+		handleHTTPError(error, next);
+	}
+};
+
+/*
+Update an exisiting profile
+*/
+const updateProfile = async (req, res, next) => {
+	try {
+		// Get profileId parameter
+		const { profileId } = req.params;
+		console.log(profileId);
+		// Get specific profile from database
+		const profile = await database.Profile.findByPk(profileId);
+
+		if (profile === null) {
+			throw new HTTPError(`Could not found the profile with id ${profileId}!`, 404);
+		}
+
+		// Update a specific post
+		const model = req.body;
+		const updatedPost = await database.Profile.update(model, {
+			where: {
+				id: profileId,
+			},
+		});
+
+		// Send response
+		res.status(200).json(updatedPost);
+	} catch (error) {
+		handleHTTPError(error, next);
+	}
+};
+
+/*
+Delete an exisiting profile
+*/
+const deleteProfile = async (req, res, next) => {
+	try {
+		// Get profileId parameter
+		const { profileId } = req.params;
+		// Get specific profile from database
+		const profile = await database.Profile.findByPk(profileId);
+
+		if (profile === null) {
+			throw new HTTPError(`Could not found the profile with id ${profileId}!`, 404);
+		}
+
+		// Delete a profile with specified id
+		const message = await database.Profile.destroy({
+			where: {
+				id: profileId,
+			},
+		});
+
+		// Send response
+		res.status(200).json(message);
+	} catch (error) {
+		handleHTTPError(error, next);
+	}
+};
+
+export {
+	createProfile, deleteProfile, getProfileById, getProfiles, updateProfile,
+};

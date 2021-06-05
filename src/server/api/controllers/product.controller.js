@@ -1,166 +1,146 @@
-// /**
-//  * All the CRUD endpoint actions together
-//  */
-//  import { In } from 'typeorm';
-// import database from '../../config/ormConfig.js';
-//  const Database = await (database).getRepository('Product');
-//  const DbProductsHasCategories = await (database).getRepository('products_has_categories');
-//  const DbCategories = await (database).getRepository('categories');
-//  const DbReviews = await (database).getRepository('reviews');
-//  const DbPromotions = await (database).getRepository('promotions');
-//  const DbOrderProducts = await (database).getRepository('order_products');
+import { convertArrayToPagedObject, handleHTTPError, HTTPError } from '../../utils';
+import database from '../../database';
 
-//  export const getProduct = async (req, res) => {
-//     try {
-//       res.status(200).json({ productData: await Database.find({ relations: ['categories']}) });
-//     } catch({ message }) {
-//       res.status(500);
-//       res.json({ error: message });
-//     }
-//   };
+/*
+Get all categories
+*/
+const getProducts = async (req, res, next) => {
+	try {
+		// Get query parameters
+		const { itemsPerPage, currentPage } = req.query;
 
-//  export const addProduct = async (req, res) => {
-//      try {
-//         let {product, categories} = req.body;
+		// Get categories from database
+		let products = null;
+		if (itemsPerPage && currentPage) {
+			products = await database.Product.findAll({
+				offset: (currentPage - 1) * itemsPerPage,
+				limit: itemsPerPage,
+			});
+			products = convertArrayToPagedObject(products, itemsPerPage, currentPage, await database.Product.count());
+		} else {
+			products = await database.Product.findAll({
+                include: [
+                   { 
+                       model: database.ProductCategory,
+                       as: 'ProductCategory',
+                       include: [
+                           {
+                            model: database.Category,
+                            as: 'category',
+                           }
+                       ]
+                    }
+                ]
+            });
+		}
 
-//         product.createdAt = Date.now();
-//         let addedProduct = await Database.save( product )
-
-//         //add categories to relational table 'many-to-many' -> TBL:products_has_categories
-//         if (categories !== null) {
-//             categories.forEach(async (cat) => {
-//                 await DbProductsHasCategories.save({product_id: addedProduct.id, category_id: cat})
-//             });
-//         } 
-//         res.status(201).json({ productData: addedProduct });
-//         } catch({ message }) {
-//             res.status(500).json({ error: message });
-//         }
-//     };
     
-//     export const updateProduct = async (req, res) => {
-//         try {
-//         const id = req.params.productId;
-//         let {product, categories} = req.body;
 
-//         product.modifiedAt = Date.now();
-//         let updatedProduct = await Database.update( {id}, product )
+    if (!products || products.length === 0) {
+      throw new HTTPError(`Could not found products!`, 404);
+    }
 
-//         //add categories to relational table 'many-to-many' -> TBL:products_has_categories
-//         if (categories !== null) {
-//             //delete existing categories
-//             await DbProductsHasCategories.delete({product_id: id})
-//             //add categories to join table
-//             categories.forEach(async (cat) => {
-//                 await DbProductsHasCategories.save({product_id: id, category_id: cat})
-//             });
-//         } 
-//             res.status(201).json({ productData: updatedProduct });
-//         }
-//         catch({ message }) {
-//             res.status(500).json({ error: message });
-//         }
-//     };
-    
-//     export const deleteProduct = async (req, res) => {
-//         try {
-//             const id = req.params.productsId;
-//             await Database.delete({id});
-//             res.status(204).end();
-//         }
-//         catch({ message }) {
-//             res.status(500).json({ error: message });
-//         }
-//     };
+		// Send response
+		res.status(200).json(products);
+	} catch (error) {
+		handleHTTPError(error, next);
+	}
+};
 
-//     export const getProductById = async (req, res) => {
-//        try {
-//            const id = req.params.productsId;
-//          res.status(200).json({ productData: await Database.findOne({id})});
-//        } catch({ message }) {
-//          res.status(500);
-//          res.json({ error: message });
-//        }
-//      };
+/*
+Get a specific product
+*/
+const getProductById = async (req, res, next) => {
+	try {
+		// Get productId parameter
+		const { productId } = req.params;
+		// Get specific product from database
+		const product = await database.Product.findByPk(productId);
 
-//      export const getProductByIdAndCategories = async (req, res) => {
-//         try {
-//             //find product
-//             const id = req.params.productsId;
-//             let product = await Database.findOne({id})
-//             //find categories from jointable for this product
-//             let categories = await DbProductsHasCategories.find({where: {product_id: id }, select: ['category_id']})
-//             categories.map(cat => {return cat.id = cat.category_id, delete cat.category_id })
-//             //find reviews from TBLcategories
-//             product.categories = await DbCategories.find({where : [...categories]})
-//           res.status(200).json({ productData: product});
-//         } catch({ message }) {
-//           res.status(500);
-//           res.json({ error: message });
-//         }
-//       };
+		if (product === null) {
+			throw new HTTPError(`Could not found the product with id ${productId}!`, 404);
+		}
+		// Send response
+		res.status(200).json(product);
+	} catch (error) {
+		handleHTTPError(error, next);
+	}
+};
 
-//       export const getProductByCategories = async (req, res) => {
-//         try {
-//             //get the requested categories (id)
-//             let {categoryList} = req.body
-//             //find products that have one of the category ids
-//             let productsList = await DbProductsHasCategories.find({where: {category_id: In(categoryList) }, select: ['product_id']})
-//             //convert array with objects to array with values
-//             let productsListCleaned = []
-//             for (let i = 0; i < productsList.length; i++) {
-//                 const productItem = productsList[i].product_id;
-//                if (!productsListCleaned.includes(productItem)) {
-//                 productsListCleaned.push(productItem)
-//                }
-//             }
-//             //find the products using array with product ids
-//             let products = await Database.find({where: {id: In(productsListCleaned)}})
-//           res.status(200).json({ productData: products});
-//         } catch({ message }) {
-//           res.status(500);
-//           res.json({ error: message });
-//         }
-//       };
+/*
+Create a new product
+*/
+const createProduct = async (req, res, next) => {
+	try {
+		// Get body from response
+		const model = req.body;
+		// Create a post
+		const createdModel = await database.Product.create(model);
+		// Send response
+		res.status(201).json(createdModel);
+	} catch (error) {
+		handleHTTPError(error, next);
+	}
+};
 
-//       export const getProductByIdAndReviews = async (req, res) => {
-//         try {
-//             //find product
-//             const id = req.params.productsId;
-//             let product = await Database.findOne({id})
-//             //find reviews from TBLreviews
-//             product.reviews = await DbReviews.find({where : {product_id: id}})
-//           res.status(200).json({ productData: product});
-//         } catch({ message }) {
-//           res.status(500);
-//           res.json({ error: message });
-//         }
-//       };
+/*
+Update an exisiting product
+*/
+const updateProduct = async (req, res, next) => {
+	try {
+		// Get productId parameter
+		const { productId } = req.params;
+		console.log(productId);
+		// Get specific product from database
+		const product = await database.Product.findByPk(productId);
 
-//       export const getProductByIdAndPromotions = async (req, res) => {
-//         try {
-//             //find product
-//             const id = req.params.productsId;
-//             let product = await Database.findOne({id})
-//             //find reviews from TBLreviews
-//             product.promotions = await DbPromotions.find({where : {product_id: id}})
-//           res.status(200).json({ productData: product});
-//         } catch({ message }) {
-//           res.status(500);
-//           res.json({ error: message });
-//         }
-//       };
+		if (product === null) {
+			throw new HTTPError(`Could not found the product with id ${productId}!`, 404);
+		}
 
-//       export const getProductByIdAndOrders = async (req, res) => {
-//         try {
-//             //find product
-//             const id = req.params.productsId;
-//             let product = await Database.findOne({id})
-//             //find reviews from TBLreviews
-//             product.orders = await DbOrderProducts.find({where : {product_id: id}})
-//           res.status(200).json({ productData: product});
-//         } catch({ message }) {
-//           res.status(500);
-//           res.json({ error: message });
-//         }
-//       };
+		// Update a specific post
+		const model = req.body;
+		const updatedPost = await database.Product.update(model, {
+			where: {
+				id: productId,
+			},
+		});
+
+		// Send response
+		res.status(200).json(updatedPost);
+	} catch (error) {
+		handleHTTPError(error, next);
+	}
+};
+
+/*
+Delete an exisiting product
+*/
+const deleteProduct = async (req, res, next) => {
+	try {
+		// Get productId parameter
+		const { productId } = req.params;
+		// Get specific product from database
+		const product = await database.Product.findByPk(productId);
+
+		if (product === null) {
+			throw new HTTPError(`Could not found the product with id ${productId}!`, 404);
+		}
+
+		// Delete a product with specified id
+		const message = await database.Product.destroy({
+			where: {
+				id: productId,
+			},
+		});
+
+		// Send response
+		res.status(200).json(message);
+	} catch (error) {
+		handleHTTPError(error, next);
+	}
+};
+
+export {
+	createProduct, deleteProduct, getProductById, getProducts, updateProduct,
+};

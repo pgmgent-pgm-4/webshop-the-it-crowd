@@ -1,123 +1,138 @@
-// /**
-//  * All the CRUD endpoint actions together
-//  */
-
-//  import database from '../../config/ormConfig.js';
-//  const Database = await (database).getRepository('User');
-//  const DbReviews = await (database).getRepository('reviews');
-//  const DbOrders = await (database).getRepository('orders');
-//  const DbProfiles = await (database).getRepository('profiles');
-//  const DbPayments = await (database).getRepository('payments');
-
-//  import bcrypt from 'bcrypt';
-//  import dotenv from 'dotenv';
-
-//  dotenv.config();
-
-//  export const getUser = async (req, res) => {
-//    try {
-//      res.status(200).json({ user: await Database.find() });
-//    } catch({ message }) {
-//      res.status(500);
-//      res.json({ error: message });
-//    }
-//  };
-
-//  export const getUserById = async (req, res) => {
-//     try {
-//         const id = req.params.usersId;
-//       res.status(200).json({ user: await Database.findOne({id}) });
-//     } catch({ message }) {
-//       res.status(500);
-//       res.json({ error: message });
-//     }
-//   };
+ import { convertArrayToPagedObject, handleHTTPError, HTTPError } from '../../utils';
+ import database from '../../database';
  
-//  export const addUser = async (req, res) => {
-//    try {
-//     req.body.password = await bcrypt.hash(req.body.password, parseInt(process.env.BCRYPT_SALT_ROUND))
-//     req.body.createdAt = new Date.now();
-//      res.status(201).json({ user: await Database.save( req.body ) });
-//    } catch({ message }) {
-//      res.status(500).json({ error: message });
-//    }
-//  };
- 
-//  export const updateUser = async (req, res) => {
-//    try {
-//      const id = req.params.usersId;
-//      req.body.password = await bcrypt.hash(req.body.password, parseInt(process.env.BCRYPT_SALT_ROUND))
-//      req.body.modifiedAt = new Date.now();
-//      res.status(200).json({ user: await Database.update( {id}, req.body ) });
-//    }
-//    catch({ message }) {
-//      res.status(500).json({ error: message });
-//    }
-//  };
- 
-//  export const deleteUser = async (req, res) => {
-//    try {
-//      const id = req.params.usersId;
-//      await Database.delete({id});
-//      res.status(204).end();
-//    }
-//    catch({ message }) {
-//      res.status(500).json({ error: message });
-//    }
-//  };
+ import bcrypt from 'bcrypt';
+ import dotenv from 'dotenv';
+  dotenv.config();
+/*
+Get all users
+*/
+const getUsers = async (req, res, next) => {
+	try {
+		// Get query parameters
+		const { itemsPerPage, currentPage } = req.query;
 
-//  export const getUserByIdAndReviews = async (req, res) => {
-//     try {
-//         //find product
-//         const id = req.params.usersId;
-//         let user = await Database.findOne({id})
-//         //find reviews from TBLreviews
-//         user.reviews = await DbReviews.find({where : {user_id: id}})
-//       res.status(200).json({ userData: user});
-//     } catch({ message }) {
-//       res.status(500);
-//       res.json({ error: message });
-//     }
-//   };
+		// Get users from database
+		let users = null;
+		if (itemsPerPage && currentPage) {
+			users = await database.User.findAll({
+				offset: (currentPage - 1) * itemsPerPage,
+				limit: itemsPerPage,
+			});
+			users = convertArrayToPagedObject(users, itemsPerPage, currentPage, await database.User.count());
+		} else {
+			users = await database.User.findAll();
+		}
 
-//   export const getUserByIdAndProfiles = async (req, res) => {
-//     try {
-//         //find product
-//         const id = req.params.usersId;
-//         let user = await Database.findOne({id})
-//         //find reviews from TBLreviews
-//         user.profiles = await DbProfiles.find({where : {user_id: id}})
-//       res.status(200).json({ userData: user});
-//     } catch({ message }) {
-//       res.status(500);
-//       res.json({ error: message });
-//     }
-//   };
+    
 
-//   export const getUserByIdAndOrders = async (req, res) => {
-//     try {
-//         //find product
-//         const id = req.params.usersId;
-//         let user = await Database.findOne({id})
-//         //find reviews from TBLreviews
-//         user.orders = await DbOrders.find({where : {user_id: id}})
-//       res.status(200).json({ userData: user});
-//     } catch({ message }) {
-//       res.status(500);
-//       res.json({ error: message });
-//     }
-//   };
-  
-//   export const getUserByIdAndPayments = async (req, res) => {
-//     try {
-//         //find product
-//         const id = req.params.usersId;
-//         let user = await Database.findOne({id})
-//         //find reviews from TBLreviews
-//         user.payments = await DbPayments.find({where : {user_id: id}})
-//       res.status(200).json({ userData: user});
-//     } catch({ message }) {
-//       res.status(500);
-//       res.json({ error: message });
-//     }
-//   };
+    if (!users || users.length === 0) {
+      throw new HTTPError(`Could not found users!`, 404);
+    }
+
+		// Send response
+		res.status(200).json(users);
+	} catch (error) {
+		handleHTTPError(error, next);
+	}
+};
+
+/*
+Get a specific user
+*/
+const getUserById = async (req, res, next) => {
+	try {
+		// Get userId parameter
+		const { userId } = req.params;
+		// Get specific user from database
+		const user = await database.User.findByPk(userId);
+
+		if (user === null) {
+			throw new HTTPError(`Could not found the user with id ${userId}!`, 404);
+		}
+		// Send response
+		res.status(200).json(user);
+	} catch (error) {
+		handleHTTPError(error, next);
+	}
+};
+
+/*
+Create a new user
+*/
+const createUser = async (req, res, next) => {
+	try {
+		// Get body from response
+		const model = req.body;
+        model.password = await bcrypt.hash(model.password, parseInt(process.env.BCRYPT_SALT_ROUND))
+		// Create a post
+		const createdModel = await database.User.create(model);
+		// Send response
+		res.status(201).json(createdModel);
+	} catch (error) {
+		handleHTTPError(error, next);
+	}
+};
+
+/*
+Update an exisiting user
+*/
+const updateUser = async (req, res, next) => {
+	try {
+		// Get userId parameter
+		const { userId } = req.params;
+		console.log(userId);
+		// Get specific user from database
+		const user = await database.User.findByPk(userId);
+
+		if (user === null) {
+			throw new HTTPError(`Could not found the user with id ${userId}!`, 404);
+		}
+
+		// Update a specific post
+		const model = req.body;
+        model.password = await bcrypt.hash(model.password, parseInt(process.env.BCRYPT_SALT_ROUND))
+		const updatedPost = await database.User.update(model, {
+			where: {
+				id: userId,
+			},
+		});
+
+		// Send response
+		res.status(200).json(updatedPost);
+	} catch (error) {
+		handleHTTPError(error, next);
+	}
+};
+
+/*
+Delete an exisiting user
+*/
+const deleteUser = async (req, res, next) => {
+	try {
+		// Get userId parameter
+		const { userId } = req.params;
+		// Get specific user from database
+		const user = await database.User.findByPk(userId);
+
+		if (user === null) {
+			throw new HTTPError(`Could not found the user with id ${userId}!`, 404);
+		}
+
+		// Delete a user with specified id
+		const message = await database.User.destroy({
+			where: {
+				id: userId,
+			},
+		});
+
+		// Send response
+		res.status(200).json(message);
+	} catch (error) {
+		handleHTTPError(error, next);
+	}
+};
+
+export {
+	createUser, deleteUser, getUserById, getUsers, updateUser,
+};
