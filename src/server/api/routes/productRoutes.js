@@ -131,7 +131,8 @@
   *       200:
   *         description: 'product is updated'
   */
- router.put('/products/:productId', productController.updateProduct); // update customer
+ router.put('/products/:productId', productController.updateProduct); // update product
+ router.put('/products/:productId/category/:categoryId', productController.addProductCategory); // update product + category
  
  /**
   * @swagger
@@ -150,8 +151,7 @@
   *       200:
   *         description: 'product is deleted'
   */
- 
- router.delete('/products/:productId', productController.deleteProduct); //delete customer
+ router.delete('/products/:productId', productController.deleteProduct); //delete product
  
  export default router;
  

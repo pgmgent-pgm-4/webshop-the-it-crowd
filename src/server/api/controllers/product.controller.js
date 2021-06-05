@@ -34,8 +34,6 @@ const getProducts = async (req, res, next) => {
             });
 		}
 
-    
-
     if (!products || products.length === 0) {
       throw new HTTPError(`Could not found products!`, 404);
     }
@@ -55,7 +53,20 @@ const getProductById = async (req, res, next) => {
 		// Get productId parameter
 		const { productId } = req.params;
 		// Get specific product from database
-		const product = await database.Product.findByPk(productId);
+		const product = await database.Product.findByPk(productId, {
+            include: [
+                { 
+                    model: database.ProductCategory,
+                    as: 'ProductCategory',
+                    include: [
+                        {
+                         model: database.Category,
+                         as: 'category',
+                        }
+                    ]
+                 }
+             ]
+        });
 
 		if (product === null) {
 			throw new HTTPError(`Could not found the product with id ${productId}!`, 404);
@@ -73,10 +84,10 @@ Create a new product
 const createProduct = async (req, res, next) => {
 	try {
 		// Get body from response
-		const model = req.body;
+		const {model} = req.body;
 		// Create a post
 		const createdModel = await database.Product.create(model);
-		// Send response
+        // Send response
 		res.status(201).json(createdModel);
 	} catch (error) {
 		handleHTTPError(error, next);
@@ -141,6 +152,22 @@ const deleteProduct = async (req, res, next) => {
 	}
 };
 
+/**
+Add category to product
+ */
+const addProductCategory = async (req, res, next) => {
+	try {
+        // Get productId parameter
+		const { productId, categoryId } = req.params;
+        // Get product
+        const productCategory = await database.ProductCategory.create({productId, categoryId});
+        // Send response
+		res.status(201).json(productCategory);
+	} catch (error) {
+		handleHTTPError(error, next);
+	}
+};
+
 export {
-	createProduct, deleteProduct, getProductById, getProducts, updateProduct,
+	createProduct, deleteProduct, getProductById, getProducts, updateProduct, addProductCategory
 };

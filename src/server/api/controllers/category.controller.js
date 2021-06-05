@@ -55,7 +55,20 @@ const getCategoryById = async (req, res, next) => {
 		// Get categoryId parameter
 		const { categoryId } = req.params;
 		// Get specific category from database
-		const category = await database.Category.findByPk(categoryId);
+		const category = await database.Category.findByPk(categoryId, {
+            include: [
+                { 
+                    model: database.ProductCategory,
+                    as: 'ProductCategory',
+                    include: [
+                        {
+                         model: database.Product,
+                         as: 'product',
+                        }
+                    ]
+                 }
+             ]
+        });
 
 		if (category === null) {
 			throw new HTTPError(`Could not found the category with id ${categoryId}!`, 404);
@@ -74,7 +87,6 @@ const createCategory = async (req, res, next) => {
 	try {
 		// Get body from response
 		const model = req.body;
-        console.log('model:::', model);
 		// Create a post
 		const createdModel = await database.Category.create(model);
 		// Send response
