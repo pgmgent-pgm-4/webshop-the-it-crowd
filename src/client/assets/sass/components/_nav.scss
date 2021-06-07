@@ -1,0 +1,107 @@
+.nav {
+    &__top {
+        // padding: $spacing-base;
+        background-color: $color-primary;
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    }
+
+    &__right {
+        display: flex;
+        align-items: center;
+
+        @media (min-width: $medium-container) {
+            flex-direction: row-reverse;
+
+            .nav__cart {
+                margin-right: 0;
+                margin-left: $spacing-md;
+            }
+        }
+    }
+
+    &__cart {
+        margin-right: $spacing-md;
+        cursor: pointer;
+    }
+
+    &__list {
+        display: none;
+
+        &-item a {
+            transition: 0.2s ease;
+
+            &:hover {
+                border-bottom: 2px solid $color-bg;
+            }
+        }
+
+        &-item--active a {
+            border-bottom: 2px solid $color-bg;
+        }
+
+        li {
+            color: $color-bg;
+            padding-right: $spacing-md;
+
+            a {
+                padding-bottom: $spacing-sm;
+            }
+
+            &:last-child {
+                padding-right: 0;
+            }
+        }
+
+        @media (min-width: $medium-container) {
+            display: flex;
+        }
+    }
+    
+    &__hamburger {
+        cursor: pointer;
+
+        @media (min-width: $medium-container) {
+            display: none;
+        }
+    }
+
+    &__bottom {
+        // padding: $spacing-base;
+        font-weight: bold;
+
+        &__items {
+            display: none;
+
+            @media (min-width: $small-container) {
+                display: flex;
+            }
+        }
+
+        &--item {
+            cursor: pointer;
+            display: flex;
+            align-items: baseline;
+            width: fit-content;
+            margin-right: $spacing-md;
+
+            &:last-child {
+                margin-right: 0;
+            }
+
+            p {
+                margin-right: $spacing-sm;
+            }
+        }
+
+        &__mobile {
+            @media (min-width: $small-container) {
+                display: none;
+            }
+        }
+    }
+}

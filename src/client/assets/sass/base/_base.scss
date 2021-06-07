@@ -1,0 +1,9 @@
+body {
+    background-color: $color-bg;
+}
+
+.container {
+    max-width: 85rem;
+    margin: 0 auto;
+    padding: $spacing-base;
+}

@@ -1,0 +1,260 @@
+.detail {
+    &__info {
+        margin-bottom: $spacing-xxl;
+        @media (min-width: $small-container) {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        &__left {
+            background-color: $color-green-light;
+            border-radius: $radius-md;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 20rem;
+            box-shadow: $shadow-box;
+            margin-bottom: $spacing-lg;
+
+            @media (min-width: $small-container) {
+                width: 45%;
+                margin-bottom: 0;
+                height: auto;
+            }
+
+            @media (min-width: $medium-container) {
+                img {
+                    width: 8rem;
+                }
+            }
+        }
+        
+        &__right {
+            @media (min-width: $small-container) {
+                width: 45%;
+            }
+
+            &__title {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                align-items: baseline;
+                margin-bottom: $spacing-lg;
+
+                p {
+                    width: 100%;
+                }
+
+                &--desktop {
+                    display: none;
+
+                    @media (min-width: $small-container) {
+                        display: flex;
+                    }
+                }
+
+                &--mobile {
+                    @media (min-width: $small-container) {
+                        display: none;
+                    }
+                }
+            }
+
+            &__stats {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                align-items: flex-end;
+                border-bottom: solid 2px $color-black-light;
+                padding-bottom: $spacing-md;
+
+                &__icons {
+                    svg {
+                        width: 3rem;
+                        height: 3rem;
+                        margin-right: $spacing-sm;
+                        padding-bottom: $spacing-sm;
+                        border-bottom: solid 4px $color-info;
+
+                        @media (min-width: $small-container) {
+                            width: 2rem;
+                            height: 2rem;
+                            padding-bottom: 0.25rem;
+                        }
+
+                        @media (min-width: $medium-container) {
+                            width: 3rem;
+                            height: 3rem;
+                            padding-bottom: $spacing-sm;
+                        }
+                    }
+                }
+
+                &__measurements {
+                    div {
+                        display: flex;
+                        flex-wrap: wrap;
+                        align-items: center;
+                        justify-content: space-between;
+
+                        svg {
+                            margin-right: 0.5rem;
+                        }
+                    }
+                }
+            }
+
+            .form {
+                margin-top: $spacing-md;
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                margin-bottom: $spacing-md;
+
+                label {
+                    font-size: $text-md;
+                    width: 100%;
+                    margin-bottom: $spacing-sm;
+                }
+
+                select {
+                    width: 100%;
+                    border: none;
+                    padding: 0.5rem;
+                    border-radius: $radius-md;
+                    box-shadow: $shadow-box;
+
+                    @media (min-width: $large-container) {
+                        width: 50%;
+                    }
+                }
+            }
+
+            &__price {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: $spacing-md;
+
+                h3 {
+                    font-size: 1.5rem;
+                }
+            }
+
+            &__amount {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: $spacing-md;
+
+                input {
+                    width: 3rem;
+                    padding: 0.5rem;
+                }
+
+                button {
+                    width: 70%;
+                }
+            }
+
+            &__extra {
+                div {
+                    display: flex;
+                    
+                    svg {
+                        margin-right: $spacing-sm;
+                    }
+                }
+            }
+        }
+    }
+
+    &__care {
+        margin-bottom: $spacing-xl;
+
+        &__title {
+            display: flex;
+            align-items: flex-end;
+            margin-bottom: $spacing-lg;
+
+            h2 {
+                margin-right: $spacing-base;
+            }
+        }
+
+        &__content {
+            @media (min-width: $small-container) {
+                display: flex;
+                justify-content: space-between;
+            }
+            
+            div {
+                margin-bottom: $spacing-md;
+
+                @media (min-width: $small-container) {
+                    width: 40%;
+                }
+
+                svg {
+                    width: 2rem;
+                    height: 2rem;
+                    margin-bottom: $spacing-sm;
+                }
+            }
+        }
+    }
+
+    &__reviews {
+        margin-bottom: $spacing-xxl;
+        
+        h2 {
+            margin-bottom: $spacing-md;
+        }
+
+        &__review {
+            padding-bottom: $spacing-md;
+            margin-bottom: $spacing-md;
+            border-bottom: solid 1px $color-black;
+
+            @media (min-width: $medium-container) {
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            &:last-child {
+                border-bottom: none;
+                margin-bottom: 0;
+                padding-bottom: 0;
+            }
+
+            &--info {
+                display: flex;
+                justify-content: space-between;
+                flex-direction: row-reverse;
+                margin-bottom: $spacing-sm;
+
+                @media (min-width: $medium-container) {
+                    display: block;
+                    width: 30%;
+                }
+
+                &__name {
+                    font-weight: bold;
+                    margin-bottom: 0.25rem;
+                }
+
+                .stars {
+                    svg {
+                        width: 1.2rem;
+                    }
+                }
+            }
+
+            &--message {
+                @media (min-width: $medium-container) {
+                    width: 30%;
+                }
+            }
+        }
+    }
+}

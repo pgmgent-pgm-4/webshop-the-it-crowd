@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="/assets/css/main.css" />
 </head>
 <body>
-    {# {% include "_components/header.njk" %} #}
+    {% include "_components/header.njk" %}
 
-    <main>
+    <main class="container">
         {{ content | safe }}
     </main>
 
-    {# {% include "_components/footer.njk" %} #}
+    {% include "_components/footer.njk" %}
 
 </body>
 </html>

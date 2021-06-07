@@ -32,10 +32,20 @@
   'components/image',
   'components/cards',
   'components/icon',
-  'components/input';
+  'components/input',
+  'components/nav.scss',
+  'components/story.scss',
+  'components/forms.scss';
 
 // 6. Page-specific styles
-
+@import
+  'pages/home',
+  'pages/contact',
+  'pages/about',
+  'pages/checkout-1',
+  'pages/checkout-2',
+  'pages/registration',
+  'pages/detail';
 
 // 7. Themes
 @import

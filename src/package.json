@@ -7,7 +7,7 @@
     "dev": "cross-env NODE_ENV=development HOSTNAME=localhost PORT=8080 nodemon --exec babel-node -e js,html,nj server/app.js --watch server/*",
     "lint": "cross-env NODE_ENV=lint eslint . --ext .js --fix",
     "sass": "sass --style=compressed client/assets/sass/main.scss client/assets/css/main.css",
-    "watch:sass": "npm run sass --watch",
+    "watch:sass": "npm run sass -- --watch",
     "watch:eleventy": "npx eleventy --config=.eleventy.cjs --serve",
     "start": "npm-run-all sass --parallel watch:*"
   },

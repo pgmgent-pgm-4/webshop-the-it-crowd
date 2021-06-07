@@ -1,0 +1,19 @@
+.header {
+    margin-bottom: $spacing-xl;
+    &__banner {
+        background: linear-gradient(rgba(88, 88, 88, 0.555), rgba(15, 15, 15, 0.651)), url('../img/plant-it_banner.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 25rem;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        h1 {
+            font-size: $text-lg;
+            color: $color-bg;
+            font-weight: bold;
+        }
+    }
+}
