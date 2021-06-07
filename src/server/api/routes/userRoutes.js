@@ -12,10 +12,15 @@
  /**
   * Router for customers
   */
- router.get('/users', userController.getUser); // get customers
- router.get('/users/:usersId', userController.getUserById); // get customers
- router.post('/users', userController.addUser); //add customers
- router.put('/users/:usersId', userController.updateUser); // update customer
- router.delete('/users/:usersId', userController.deleteUser); //delete customer
+//  router.get('/users', userController.getUser); // get customers
+//  router.get('/users/:usersId', userController.getUserById); // get customers
+//  router.get('/users/:usersId/reviews', userController.getUserByIdAndReviews); // get customers
+//  router.get('/users/:usersId/orders', userController.getUserByIdAndOrders); // get customers
+//  router.get('/users/:usersId/profiles', userController.getUserByIdAndProfiles); // get customers
+//  router.get('/users/:usersId/payments', userController.getUserByIdAndPayments); // get customers
+//  router.post('/users', userController.addUser); //add customers
+//  router.put('/users/:usersId', userController.updateUser); // update customer
+//  router.delete('/users/:usersId', userController.deleteUser); //delete customer
 
  export default router;
+ 

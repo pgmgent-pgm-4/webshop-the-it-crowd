@@ -12,10 +12,10 @@ const router = express.Router();
 /**
  * Router for customers
  */
-router.get('/payments', paymentController.getPayment); // get customers
-router.get('/payments/:paymentsId', paymentController.getPaymentById); // get customers
-router.post('/payments', paymentController.addPayment); //add customers
-router.put('/payments/:paymentsId', paymentController.updatePayment); // update customer
-router.delete('/payments/:paymentsId', paymentController.deletePayment); //delete customer
+// router.get('/payments', paymentController.getPayment); // get customers
+// router.get('/payments/:paymentsId', paymentController.getPaymentById); // get customers
+// router.post('/payments', paymentController.addPayment); //add customers
+// router.put('/payments/:paymentsId', paymentController.updatePayment); // update customer
+// router.delete('/payments/:paymentsId', paymentController.deletePayment); //delete customer
 
 export default router;
