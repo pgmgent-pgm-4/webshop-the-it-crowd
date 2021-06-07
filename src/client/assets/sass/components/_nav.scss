@@ -76,9 +76,9 @@
 
         &__items {
             display: none;
-
             @media (min-width: $small-container) {
                 display: flex;
+                margin-bottom: $spacing-base;
             }
         }
 
@@ -96,6 +96,10 @@
             p {
                 margin-right: $spacing-sm;
             }
+
+            svg.arrow--up{
+                transform: rotate(180deg);
+            }
         }
 
         &__mobile {
@@ -105,9 +109,16 @@
         }
 
         &__dropdown {
-            
+            border-top: 1px solid $color-primary;
+            @include flexer(center, flex-start, wrap);
             &--item {
+                margin-right: $spacing-md;
+                padding: $spacing-sm 0;
+                border-bottom: 1px solid rgba(0,0,0,0);
+            }
 
+            &--item:hover {
+                border-bottom: 1px solid $color-primary;
             }
         }
     }

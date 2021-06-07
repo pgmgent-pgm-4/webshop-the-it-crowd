@@ -1,3 +1,3 @@
-export default orderAlphabetic = (list) => {
-    
+export const orderAlphabetic = (list) => {
+    return true
 }
