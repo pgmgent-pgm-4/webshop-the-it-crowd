@@ -157,3 +157,4 @@ const deleteCategory = async (req, res, next) => {
 export {
 	createCategory, deleteCategory, getCategoryById, getCategories, updateCategory,
 };
+

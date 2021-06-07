@@ -131,3 +131,4 @@ const deletePayment = async (req, res, next) => {
 export {
 	createPayment, deletePayment, getPaymentById, getPayments, updatePayment,
 };
+

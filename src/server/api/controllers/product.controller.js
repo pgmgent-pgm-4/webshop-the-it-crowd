@@ -203,3 +203,4 @@ const deleteProductCategory = async (req, res, next) => {
 export {
 	createProduct, deleteProduct, getProductById, getProducts, updateProduct, addProductCategory, deleteProductCategory
 };
+

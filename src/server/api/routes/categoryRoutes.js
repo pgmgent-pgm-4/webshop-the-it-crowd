@@ -154,3 +154,4 @@ router.put('/categories/:categoryId', categoryController.updateCategory); // upd
 router.delete('/categories/:categoryId', categoryController.deleteCategory); //delete customer
 
 export default router;
+

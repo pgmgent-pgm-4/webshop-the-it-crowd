@@ -189,3 +189,4 @@ const deleteProfile = async (req, res, next) => {
 export {
 	createProfile, deleteProfile, getProfileById, getProfiles, updateProfile,
 };
+

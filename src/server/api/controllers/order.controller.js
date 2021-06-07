@@ -137,3 +137,4 @@ const deleteOrder = async (req, res, next) => {
 export {
 	createOrder, deleteOrder, getOrderById, getOrders, updateOrder,
 };
+

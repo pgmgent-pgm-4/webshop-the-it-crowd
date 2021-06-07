@@ -7,6 +7,7 @@
 /*
 Get all users
 */
+
 const getUsers = async (req, res, next) => {
 	try {
 		// Get query parameters
