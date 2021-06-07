@@ -152,6 +152,6 @@
   *         description: 'product is deleted'
   */
  router.delete('/products/:productId', productController.deleteProduct); //delete product
- 
+ router.delete('/products/:productId/category/:categoryId', productController.deleteProductCategory); // update product + category
  export default router;
  

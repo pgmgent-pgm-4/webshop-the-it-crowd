@@ -21,7 +21,14 @@ const getUsers = async (req, res, next) => {
 			});
 			users = convertArrayToPagedObject(users, itemsPerPage, currentPage, await database.User.count());
 		} else {
-			users = await database.User.findAll();
+			users = await database.User.findAll({
+                include: [
+                    {
+                        model: database.Profile,
+                        as: 'profile'
+                    }
+                ]
+            });
 		}
 
     
@@ -45,7 +52,14 @@ const getUserById = async (req, res, next) => {
 		// Get userId parameter
 		const { userId } = req.params;
 		// Get specific user from database
-		const user = await database.User.findByPk(userId);
+		const user = await database.User.findByPk(userId, {
+            include: [
+                {
+                    model: database.Profile,
+                    as: 'profile'
+                }
+            ]
+        });
 
 		if (user === null) {
 			throw new HTTPError(`Could not found the user with id ${userId}!`, 404);

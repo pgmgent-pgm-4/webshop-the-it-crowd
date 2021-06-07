@@ -18,7 +18,34 @@ const getProfiles = async (req, res, next) => {
 			});
 			profiles = convertArrayToPagedObject(profiles, itemsPerPage, currentPage, await database.Profile.count());
 		} else {
-			profiles = await database.Profile.findAll();
+			profiles = await database.Profile.findAll({
+                include: [
+                    { 
+                        model: database.Payment,
+                        as: 'payment'
+                     },
+                     {
+                         model: database.Order,
+                         as: "order",
+                         include: [
+                             {
+                                 model: database.OrderProduct , 
+                                 as: 'OrderProduct',
+                                 include: [
+                                     {
+                                         model: database.Product,
+                                         as: "product"
+                                     }
+                                 ]
+                             }
+                         ]
+                     },
+                     {
+                         model: database.Review,
+                         as: 'review'
+                     }
+                 ]
+            });
 		}
 
     
@@ -42,7 +69,38 @@ const getProfileById = async (req, res, next) => {
 		// Get profileId parameter
 		const { profileId } = req.params;
 		// Get specific profile from database
-		const profile = await database.Profile.findByPk(profileId);
+		const profile = await database.Profile.findByPk(profileId, {
+            include: [
+                 {
+                     model: database.Order,
+                     as: "order",
+                     include: [
+                         {
+                             model: database.OrderProduct , 
+                             as: 'OrderProduct',
+                             include: [
+                                 {
+                                     model: database.Product,
+                                     as: "product"
+                                 }
+                             ]
+                         },
+                         {
+                             model: database.Payment,
+                             as: 'payment'
+                         }
+                     ]
+                 },
+                 {
+                     model: database.Review,
+                     as: 'review'
+                 },
+                 { 
+                    model: database.Payment,
+                    as: 'payment'
+                 },
+             ]
+        });
 
 		if (profile === null) {
 			throw new HTTPError(`Could not found the profile with id ${profileId}!`, 404);

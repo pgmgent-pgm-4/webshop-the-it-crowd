@@ -18,7 +18,10 @@ const getOrders = async (req, res, next) => {
 			});
 			orders = convertArrayToPagedObject(orders, itemsPerPage, currentPage, await database.Order.count());
 		} else {
-			orders = await database.Order.findAll();
+			orders = await database.Order.findAll({
+                include: [{all: true,
+                    include: [{all: true}]}]
+            });
 		}
 
     
@@ -42,7 +45,10 @@ const getOrderById = async (req, res, next) => {
 		// Get orderId parameter
 		const { orderId } = req.params;
 		// Get specific order from database
-		const order = await database.Order.findByPk(orderId);
+		const order = await database.Order.findByPk(orderId, {
+            include: [{all: true,
+                include: [{all: true}]}]
+        });
 
 		if (order === null) {
 			throw new HTTPError(`Could not found the order with id ${orderId}!`, 404);

@@ -29,6 +29,17 @@ const getProducts = async (req, res, next) => {
                             as: 'category',
                            }
                        ]
+                    },
+                    {
+                        model: database.Promotion,
+                        as: 'promotion'
+                    },
+                    {
+                        model: database.Review,
+                        as: 'review'
+                    },
+                    {   model: database.OrderProduct,
+                        as: 'OrderProduct'
                     }
                 ]
             });
@@ -64,7 +75,15 @@ const getProductById = async (req, res, next) => {
                          as: 'category',
                         }
                     ]
-                 }
+                 },
+                {
+                    model: database.Promotion,
+                    as: 'promotion'
+                },
+                {
+                    model: database.Review,
+                    as: 'review'
+                }
              ]
         });
 
@@ -168,6 +187,19 @@ const addProductCategory = async (req, res, next) => {
 	}
 };
 
+const deleteProductCategory = async (req, res, next) => {
+	try {
+        // Get productId parameter
+		const { productId, categoryId } = req.params;
+        // Get product
+        const productCategory = await database.ProductCategory.delete({where: {productId, categoryId}});
+        // Send response
+		res.status(201).json(productCategory);
+	} catch (error) {
+		handleHTTPError(error, next);
+	}
+};
+
 export {
-	createProduct, deleteProduct, getProductById, getProducts, updateProduct, addProductCategory
+	createProduct, deleteProduct, getProductById, getProducts, updateProduct, addProductCategory, deleteProductCategory
 };
