@@ -17,6 +17,9 @@ export default (sequelize) => {
         },
       description: {
           type: DataTypes.TEXT
+        },
+        subCategory: {
+            type: DataTypes.STRING
         }
     },
     {
