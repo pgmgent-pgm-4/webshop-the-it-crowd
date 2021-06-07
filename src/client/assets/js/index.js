@@ -1,20 +1,40 @@
-<<<<<<< HEAD
 import * as helpers from './helpers.js';
 import * as constants from './constants.js';
 import * as subfunctions from './subfunctions.js';
-=======
-import test from './helpers.js';
-import constants from './constants.js';
->>>>>>> 12c066436ae6909c31d9b724a38b0af341b41e53
 
 (() => {
     const app = {
         init() {
             this.cacheElements();
-<<<<<<< HEAD
             this.eventListeners();
+            this.hamburgerMenu();
+            this.dropDownMenu();
         },
         eventListeners() {
+
+        },
+        cacheElements() {
+            //dropdown elements
+           this.$navBottomList = document.querySelector('.nav__bottom__items') || null;
+           this.$navBottomItems = document.querySelectorAll('.nav__bottom--item') || null;
+           this.$navBottomMobile = document.querySelector('.nav__bottom__mobile') || null;
+           //hamburger elements
+           this.hamburger = document.querySelector('.nav__hamburger') || null;
+           this.navList = document.querySelector('.nav__list') || null;
+        },
+        hamburgerMenu() {
+            this.hamburger.addEventListener('click', (e) => {
+                if(this.navList.classList.contains('show-items')) {
+                    this.navList.classList.remove('show-items');
+                } else {
+                    this.navList.classList.add('show-items');
+                }
+            })
+        },
+        dropDownMenu() {
+           /**
+            * add eventlisteners
+            */
             if(this.$navBottomItems !== null){
                 //add eventlistener for each dropdown action
                 this.$navBottomItems.forEach($navBottomItem => {
@@ -48,34 +68,6 @@ import constants from './constants.js';
                     })
                 })
             }
-
-        },
-        cacheElements() {
-           this.$navBottomList = document.querySelector('.nav__bottom__items') || null;
-           this.$navBottomItems = document.querySelectorAll('.nav__bottom--item') || null;
-           this.$navBottomMobile = document.querySelector('.nav__bottom__mobile') || null;
-=======
-            this.hamburgerMenu();
-            console.log('ik werk');
-            console.log('test:::', test)
-            console.log('test:::', constants)
-        },
-        eventListeners() {
-            
-        },
-        cacheElements() {
-            this.hamburger = document.querySelector('.nav__hamburger');
-            this.navList = document.querySelector('.nav__list');
-        },
-        hamburgerMenu() {
-            this.hamburger.addEventListener('click', (e) => {
-                if(this.navList.classList.contains('show-items')) {
-                    this.navList.classList.remove('show-items');
-                } else {
-                    this.navList.classList.add('show-items');
-                }
-            })
->>>>>>> 12c066436ae6909c31d9b724a38b0af341b41e53
         }
     }
     app.init();

@@ -33,7 +33,7 @@ export default (sequelize) => {
       description: DataTypes.TEXT,
       synopsis: DataTypes.TEXT,
       price: DataTypes.FLOAT,
-
+      photo: DataTypes.TEXT,
     },
     {
       sequelize,

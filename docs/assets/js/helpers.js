@@ -1,5 +1,1 @@
-const BramStr = 'bramzz'
-
-export default {
-    BramStr
-}
+export const BramStr = 'bramzz'
