@@ -73,6 +73,7 @@
     }
 
     &__items {
+        width: 100%;
         .list {
             flex-wrap: wrap;
             justify-content: space-between;

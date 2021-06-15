@@ -45,28 +45,7 @@ const getProductById = async (req, res, next) => {
 		// Get productId parameter
 		const { productId } = req.params;
 		// Get specific product from database
-		const product = await database.Product.findByPk(productId, {
-            include: [
-                { 
-                    model: database.ProductCategory,
-                    as: 'ProductCategory',
-                    include: [
-                        {
-                         model: database.Category,
-                         as: 'category',
-                        }
-                    ]
-                 },
-                {
-                    model: database.Promotion,
-                    as: 'promotion'
-                },
-                {
-                    model: database.Review,
-                    as: 'review'
-                }
-             ]
-        });
+		const product = await database.Product.findByPk(productId, {include: [{all: true, include: [{all: true}]}]});
 
 		if (product === null) {
 			throw new HTTPError(`Could not found the product with id ${productId}!`, 404);
