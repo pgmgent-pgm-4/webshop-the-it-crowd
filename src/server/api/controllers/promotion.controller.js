@@ -19,7 +19,12 @@ const getPromotions = async (req, res, next) => {
 			});
 			promotions = convertArrayToPagedObject(promotions, itemsPerPage, currentPage, await database.Promotion.count());
 		} else {
-			promotions = await database.Promotion.findAll();
+			promotions = await database.Promotion.findAll({
+                include: [
+                    {all: true, 
+                    include: [{all: true}]}
+                ]
+            });
 		}
 
     

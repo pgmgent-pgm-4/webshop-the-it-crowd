@@ -5,19 +5,23 @@ export default (sequelize) => {
     static associate(models) {
         this.hasMany(models.ProductCategory, { 
             as: 'ProductCategory',
-            foreignKey: 'productId' 
+            foreignKey: 'productId' ,
+            constraints: false
             });
         this.hasMany(models.Promotion, { 
             as: 'promotion',
-            foreignKey: 'productId' 
+            foreignKey: 'productId',
+            constraints: false
             });
         this.hasMany(models.OrderProduct, { 
             as: 'OrderProduct',
-            foreignKey: 'productId' 
+            foreignKey: 'productId' ,
+            constraints: false
             });
         this.hasMany(models.Review, { 
             as: 'review',
-            foreignKey: 'productId' 
+            foreignKey: 'productId' ,
+            constraints: false
             });
         this.belongsToMany(models.Tag, {
             through: 'ProductsHasTags',
@@ -38,6 +42,7 @@ export default (sequelize) => {
     {
       sequelize,
       modelName: 'Product',
+      tableName: 'Product',
     },
   );
 

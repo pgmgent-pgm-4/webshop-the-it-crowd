@@ -6,18 +6,22 @@ export default (sequelize) => {
       this.hasOne(models.User, {
         as: 'user',
         foreignKey: 'profileId',
+        constraints: false
       });
       this.hasMany(models.Payment, {
         as: "payment", 
-        foreignKey: 'profileId'
+        foreignKey: 'profileId',
+        constraints: false
     });
     this.hasMany(models.Review, {
         as: "review", 
-        foreignKey: 'profileId'
+        foreignKey: 'profileId',
+        constraints: false
     });
     this.hasMany(models.Order, {
         as: "order", 
-        foreignKey: 'profileId'
+        foreignKey: 'profileId',
+        constraints: false
     });
     }
   }
@@ -37,6 +41,7 @@ export default (sequelize) => {
     {
       sequelize,
       modelName: 'Profile',
+      tableName: 'Profile',
     },
   );
 

@@ -6,6 +6,7 @@ export default (sequelize) => {
       this.hasMany(models.ProductCategory, {
         as: 'ProductCategory',
         foreignKey: 'categoryId',
+        constraints: false
       });
     }
   }
@@ -25,6 +26,7 @@ export default (sequelize) => {
     {
       sequelize,
       modelName: 'Category', 
+        tableName: 'Category',
     },
   );
 

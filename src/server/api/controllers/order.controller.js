@@ -19,8 +19,10 @@ const getOrders = async (req, res, next) => {
 			orders = convertArrayToPagedObject(orders, itemsPerPage, currentPage, await database.Order.count());
 		} else {
 			orders = await database.Order.findAll({
-                include: [{all: true,
-                    include: [{all: true}]}]
+                include: [
+                    {all: true, 
+                    include: [{all: true}]}
+                ]
             });
 		}
 

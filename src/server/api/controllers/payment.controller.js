@@ -18,7 +18,12 @@ const getPayments = async (req, res, next) => {
 			});
 			payments = convertArrayToPagedObject(payments, itemsPerPage, currentPage, await database.Payment.count());
 		} else {
-			payments = await database.Payment.findAll();
+			payments = await database.Payment.findAll({
+                include: [
+                    {all: true, 
+                    include: [{all: true}]}
+                ]
+            });
 		}
 
     

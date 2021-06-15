@@ -24,10 +24,8 @@ const getUsers = async (req, res, next) => {
 		} else {
 			users = await database.User.findAll({
                 include: [
-                    {
-                        model: database.Profile,
-                        as: 'profile'
-                    }
+                    {all: true, 
+                    include: [{all: true}]}
                 ]
             });
 		}

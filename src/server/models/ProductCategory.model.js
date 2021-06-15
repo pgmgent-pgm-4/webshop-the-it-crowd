@@ -4,10 +4,12 @@ export default (sequelize) => {
   class ProductCategory extends Model {
     static associate(models) {
       this.belongsTo(models.Category, {
-        as: 'category'
+        as: 'category',
+        constraints: false
       });
       this.belongsTo(models.Product, {
-        as: 'product'
+        as: 'product',
+        constraints: false
       });
     }
   }
@@ -19,6 +21,7 @@ export default (sequelize) => {
     {
       sequelize,
       modelName: 'ProductCategory',
+      tableName: 'ProductCategory',
     },
   );
 

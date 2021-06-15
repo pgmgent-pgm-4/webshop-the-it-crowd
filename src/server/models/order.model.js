@@ -3,14 +3,16 @@ import { Model, DataTypes } from 'sequelize';
 export default (sequelize) => {
   class Order extends Model {
     static associate(models) {
-        this.belongsTo(models.Profile, { foreignKey: 'profileId' });
+        this.belongsTo(models.Profile, { foreignKey: 'profileId', constraints: false });
         this.hasMany(models.Payment, {
             as: 'payment',
-            foreignKey: 'orderId' 
+            foreignKey: 'orderId',
+            constraints: false
         });
         this.hasMany(models.OrderProduct, {
             as: 'OrderProduct',
-            foreignKey: 'orderId' 
+            foreignKey: 'orderId' ,
+            constraints: false
         });
 
     }
@@ -24,6 +26,7 @@ export default (sequelize) => {
     {
       sequelize,
       modelName: 'Order',
+      tableName: 'Order',
     },
   );
 

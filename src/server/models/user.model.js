@@ -3,7 +3,7 @@ import { Model, DataTypes } from 'sequelize';
 export default (sequelize) => {
   class User extends Model {
     static associate(models) {
-        this.belongsTo(models.Profile, { foreignKey: 'profileId' });
+        this.belongsTo(models.Profile, { foreignKey: 'profileId', constraints: false });
     }
   }
 
@@ -16,6 +16,7 @@ export default (sequelize) => {
     {
       sequelize,
       modelName: 'User',
+      tableName: 'User',
     },
   );
 

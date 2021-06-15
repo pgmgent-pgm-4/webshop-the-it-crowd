@@ -19,7 +19,12 @@ const getReviews = async (req, res, next) => {
 			});
 			reviews = convertArrayToPagedObject(reviews, itemsPerPage, currentPage, await database.Review.count());
 		} else {
-			reviews = await database.Review.findAll();
+			reviews = await database.Review.findAll({
+                include: [
+                    {all: true, 
+                    include: [{all: true}]}
+                ]
+            });
 		}
 
     
@@ -78,7 +83,6 @@ const updateReview = async (req, res, next) => {
 	try {
 		// Get reviewId parameter
 		const { reviewId } = req.params;
-		console.log(reviewId);
 		// Get specific review from database
 		const review = await database.Review.findByPk(reviewId);
 

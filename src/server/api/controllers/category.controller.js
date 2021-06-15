@@ -20,16 +20,8 @@ const getCategories = async (req, res, next) => {
 		} else {
 			categories = await database.Category.findAll({
                 include: [
-                   { 
-                       model: database.ProductCategory,
-                       as: 'ProductCategory',
-                       include: [
-                           {
-                            model: database.Product,
-                            as: 'product',
-                           }
-                       ]
-                    }
+                    {all: true, 
+                    include: [{all: true}]}
                 ]
             });
 		}
