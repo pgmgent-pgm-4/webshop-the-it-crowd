@@ -20,31 +20,7 @@ const getProfiles = async (req, res, next) => {
 		} else {
 			profiles = await database.Profile.findAll({
                 include: [
-                    { 
-                        model: database.Payment,
-                        as: 'payment'
-                     },
-                     {
-                         model: database.Order,
-                         as: "order",
-                         include: [
-                             {
-                                 model: database.OrderProduct , 
-                                 as: 'OrderProduct',
-                                 include: [
-                                     {
-                                         model: database.Product,
-                                         as: "product"
-                                     }
-                                 ]
-                             }
-                         ]
-                     },
-                     {
-                         model: database.Review,
-                         as: 'review'
-                     }
-                 ]
+                    {all: true, include: [{all: true}]} ]
             });
 		}
 

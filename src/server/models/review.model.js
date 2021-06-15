@@ -3,9 +3,10 @@ import { Model, DataTypes } from 'sequelize';
 export default (sequelize) => {
   class Review extends Model {
     static associate(models) {
-    this.belongsTo(models.Profile, { foreignKey: 'profileId' });
+    this.belongsTo(models.Profile, { foreignKey: 'profileId', constraints: false });
     this.belongsTo(models.Product, { 
-        foreignKey: 'productId'
+        foreignKey: 'productId', 
+        constraints: false
    });
     }
   }
@@ -18,6 +19,7 @@ export default (sequelize) => {
     {
       sequelize,
       modelName: 'Review',
+      tableName: 'Review',
     },
   );
 

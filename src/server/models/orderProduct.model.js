@@ -4,10 +4,12 @@ export default (sequelize) => {
   class OrderProduct extends Model {
     static associate(models) {
       this.belongsTo(models.Product, { 
-        foreignKey: 'productId'
+        foreignKey: 'productId',
+        constraints: false
     });
     this.belongsTo(models.Order, { 
-        foreignKey: 'orderId'
+        foreignKey: 'orderId',
+        constraints: false
     });
     }
   }
@@ -22,6 +24,7 @@ export default (sequelize) => {
     {
       sequelize,
       modelName: 'OrderProduct',
+      tableName: 'OrderProduct',
     },
   );
 

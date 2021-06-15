@@ -78,7 +78,6 @@ const updateReview = async (req, res, next) => {
 	try {
 		// Get reviewId parameter
 		const { reviewId } = req.params;
-		console.log(reviewId);
 		// Get specific review from database
 		const review = await database.Review.findByPk(reviewId);
 
