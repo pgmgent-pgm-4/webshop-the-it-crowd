@@ -19,29 +19,8 @@ const getProducts = async (req, res, next) => {
 			products = convertArrayToPagedObject(products, itemsPerPage, currentPage, await database.Product.count());
 		} else {
 			products = await database.Product.findAll({
-                include: [
-                   { 
-                       model: database.ProductCategory,
-                       as: 'ProductCategory',
-                       include: [
-                           {
-                            model: database.Category,
-                            as: 'category',
-                           }
-                       ]
-                    },
-                    {
-                        model: database.Promotion,
-                        as: 'promotion'
-                    },
-                    {
-                        model: database.Review,
-                        as: 'review'
-                    },
-                    {   model: database.OrderProduct,
-                        as: 'OrderProduct'
-                    }
-                ]
+                include: [{all: true,
+                    include: [{all: true}]}]
             });
 		}
 
