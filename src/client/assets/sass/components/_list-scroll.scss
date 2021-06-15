@@ -1,0 +1,129 @@
+.list {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-bottom: $spacing-xxl;
+
+    &::-webkit-scrollbar {
+        height: 0.5rem;
+        background-color: $color-white;
+        border-radius: $radius-base;
+    }
+
+    &::-webkit-scrollbar-track {
+        border-radius: $radius-base;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: $radius-base;
+        background-color: $color-primary;
+        outline: none;
+    }
+
+    &__item {
+        background-color: $color-green-light;
+        width: 12rem;
+        height: 20rem;
+        flex-shrink: 0;
+        border-radius: $radius-base;
+        margin-right: $spacing-md;
+        margin-bottom: $spacing-base;
+        box-shadow: 6px 8px 16px 0px rgba(170, 170, 170, 0.452);
+        position: relative;
+        padding: 1rem;
+        cursor: pointer;
+        overflow-y: hidden;
+
+        &:hover &__hovered {
+            display: block;
+            transform: translateY(-9.5rem);
+            opacity: 100;
+        }
+
+        &__link {
+            width: min-content;
+            height: min-content;
+
+            &__top {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+                
+                svg {
+                    margin-bottom: $spacing-sm;
+                    width: 1.5rem;
+                    height: 1.5rem;
+                }
+
+                figure {
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    margin-bottom: $spacing-base;
+                }
+            }
+
+            &__bottom {
+                &__price {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding-bottom: 1rem;
+                    border-bottom: solid 1px $color-black;
+                    margin-bottom: 1rem;
+
+                    svg {
+                        width: 1.8rem;
+                        height: 1.8rem;
+                    }
+                }
+            }
+        }
+
+        &:nth-child(odd) {
+            background-color: $color-blue-light;
+        }
+
+        &__hovered {
+            background-color: $color-white;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            opacity: 0;
+            border-radius: 0 0 $radius-base $radius-base;
+            padding: 1rem;
+            transition: 0.2s ease;
+
+            &__title {
+                border-top: solid 1px $color-black;
+                padding-top: 0.5rem;
+            }
+
+            &__price {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding-bottom: 1rem;
+                margin-bottom: 1rem;
+                border-bottom: dashed 1px $color-black;
+                padding-bottom: 0.5rem;
+
+                svg {
+                    width: 1.8rem;
+                    height: 1.8rem;
+                }
+            }
+
+            &__icons {
+                svg {
+                    width: 2rem;
+                    height: 2rem;
+                    margin-right: 0.5rem;
+                    padding-bottom: 0.5rem;
+                    border-bottom: solid 3px $color-red-dark;
+                }
+            }
+        }
+    }
+}
