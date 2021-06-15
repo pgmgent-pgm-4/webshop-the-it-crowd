@@ -20,7 +20,9 @@ const getProfiles = async (req, res, next) => {
 		} else {
 			profiles = await database.Profile.findAll({
                 include: [
-                    {all: true, include: [{all: true}]} ]
+                    {all: true, 
+                    include: [{all: true}]}
+                ]
             });
 		}
 

@@ -23,8 +23,10 @@ const getUsers = async (req, res, next) => {
 			users = convertArrayToPagedObject(users, itemsPerPage, currentPage, await database.User.count());
 		} else {
 			users = await database.User.findAll({
-                include: [{all: true,
-                    include: [{all: true}]}]
+                include: [
+                    {all: true, 
+                    include: [{all: true}]}
+                ]
             });
 		}
 
