@@ -25,7 +25,8 @@ const getUsers = async (req, res, next) => {
 			users = await database.User.findAll({
                 include: [
                     {all: true, 
-                    include: [{all: true}]}
+                    include: [{all: true, include: [{all: true}]
+                    }]}
                 ]
             });
 		}

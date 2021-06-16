@@ -42,7 +42,7 @@ import * as subfunctions from './subfunctions.js';
 
         },
         checkLogin() {
-            let currentUser = this.getCurrentUser();
+            let currentUser = this.getCurrentUser() || 'no';
             if(currentUser !== 'no') {
                 document.querySelector('.nav__list-item:last-child a').innerHTML = "Logout"
                 document.querySelector('.nav__list-item:last-child a').addEventListener('click', e => {
@@ -127,7 +127,9 @@ import * as subfunctions from './subfunctions.js';
             return localStorage.getItem('token');
         },
         getCurrentUser() {
-            return JSON.parse(localStorage.getItem('currentUser'));
+            if(localStorage.getItem('currentUser') !== 'no'){
+                return JSON.parse(localStorage.getItem('currentUser'));
+            }
         },
         hamburgerMenu() {
             this.$hamburger.addEventListener('click', (e) => {
@@ -413,7 +415,7 @@ import * as subfunctions from './subfunctions.js';
             }
         },
 
-        createDetailHtml(product) {
+        async createDetailHtml(product) {
             let tempStr = `
             <section class="detail__info">
             <div class="detail__info__right__title--mobile detail__info__right__title">
@@ -609,14 +611,56 @@ import * as subfunctions from './subfunctions.js';
                 `
             }).join('')}
         </section>
+        <div>
+            <input id="review-score" type="number" min="0" max="10" value="0" />
+            <input id="review-text" type="text" />
+            <button id="button-add-review">add review</button>
+        </div>
             `
+            this.$detailPage.innerHTML = tempStr;
 
-        this.$detailPage.innerHTML = tempStr;
+            
+        let user = this.getCurrentUser()
+        if (user) {
+             let userResponse = await fetch(`http://127.0.0.1:6001/api/users/${user.id}`);
+        let userData = await userResponse.json();
+        document.querySelector('#button-add-review').addEventListener('click', async (e) => {
+            let review = {
+                score: document.querySelector('#review-score').value,
+                description: document.querySelector('#review-text').value,
+                productId: product.id,
+                profileId: userData.Profile.id
+            }
+
+            const options = {
+                method: 'POST',
+                body: JSON.stringify(review),
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": "Bearer " + this.getTokenJwt()
+                }
+            }
+            let response = await fetch("http://127.0.0.1:6001/api/reviews", options)
+            let data = await response.json();
+            console.log(data)
+            this.getDetail();
+        })
+        
+    }
+       
+
         document.querySelector('#add-to-cart').addEventListener('click', (e) => {
+            this.handleAddToOrder(e);
+        })
+        },
+        async handleAddToOrder(e) {
             let currentUser = this.getCurrentUser()
+          
+            let userResponse = await fetch(`http://127.0.0.1:6001/api/users/${currentUser.id}`);
+            let userData = await userResponse.json();
             let order = {
                 orderState: 1,
-                profileId: currentUser.id,
+                profileId: userData.Profile.id,
                 OrderProduct: [{
                     productPrice: document.querySelector('#add-to-cart-price').innerText.split('€').join(''),
                     productAmount: document.querySelector('#add-to-cart-amount').value,
@@ -633,55 +677,72 @@ import * as subfunctions from './subfunctions.js';
                     "Authorization": "Bearer " + this.getTokenJwt()
                 }
             }
-
-            this.handleAddToOrder(options);
-        })
-        },
-        async handleAddToOrder(options) {
             let response = await fetch("http://127.0.0.1:6001/api/orders", options)
             let data = await response.json();
             console.log(data)
+            this.getBasket();
         },
         async getBasket() {
             //get profile info of user
             let user = this.getCurrentUser();
+            if(!user){
+                return
+            }
             let responseUser = await fetch(`http://127.0.0.1:6001/api/users/${user.id}`);
             let dataUser = await responseUser.json();
 
-            // get orders of profile
-            let responseProfile = await fetch(`http://127.0.0.1:6001/api/profiles/${dataUser.Profile.id}`);
-            let dataProfile = await responseProfile.json();
-            console.log('profileinfo', dataProfile.order)
-            let orders = [];
-            dataProfile.order.forEach(order => {
-                if(order.orderState === 1) {
-                    orders.push(order)
+            let orders = []; //orders for basket - checkout
+            console.log('get that', dataUser.Profile.order)
+            dataUser.Profile.order.forEach(o => {
+                if(o.orderState === 1) {
+                    orders.push(o.id)
                 }
             })
-            document.querySelector('.nav__cart').innerHTML += orders.length
-            // orders to buy or show in checkout
-            let products = []
-            orders.forEach(order => {
-                order.OrderProduct.forEach(product => {
-                    products.push(product.productId)
-                })
+            console.log(orders) // all the baskets
+
+            this.ordersDetails = []
+            orders.forEach( async order => {
+                let responseOrderProduct = await fetch(`http://127.0.0.1:6001/api/orders/${order}`)
+                let dataOrderProduct = await responseOrderProduct.json()
+                if (dataOrderProduct.OrderProduct[0]) {
+                    let product = dataOrderProduct.OrderProduct[0].Product
+                    product.productAmount = dataOrderProduct.OrderProduct[0].productAmount
+                    if(document.querySelector('.product__card-container')) {
+                        document.querySelector('.product__card-container').innerHTML += `
+                   
+                    <div class="product__top__card">
+                        <figure class="product__top__card--img">
+                            <img src="../assets/img/plant-card.png">
+                        </figure>
+
+                        <section class="product__top__card--content">
+                            <div class="product__top__card--content__top">
+                                <div>
+                                    <h3>${product.name}</h3>
+                                    <span>X</span>
+                                </div>
+
+                                <div>
+                                    <p>Plant: <span>${product.name}</span></p>
+                                    <span>€${product.price}</span>
+                                </div>
+
+                                <div>
+                                    <p>Pot: <span>Ceramic</span></p>
+                                    <span>€5</span>
+                                </div>
+                            </div>
+
+                            <div class="product__top__card--content__bottom">
+                                <input type="number" value="${product.productAmount}" min="1" max="100">
+                                <span>€${(product.price + 5) * product.productAmount}</span>
+                            </div>
+                        </section>
+                    </div>
+                    `
+                }}
             })
-
-            //get porudcts
-            let responseProducts = await fetch('http://127.0.0.1:6001/api/products');
-            let dataProducts = await responseProducts.json();
-            console.log(dataProducts)
-            let checkoutProducts = []
-            dataProducts.forEach(product => {
-                if(products.includes(product.id)){
-                    checkoutProducts.push(product)
-                }
-            })
-            console.log(checkoutProducts)
-
-            let tempStr = '';
-
-
+            document.querySelector('#shopping-cart-amount').innerHTML = orders.length
         }
     }
     app.init();

@@ -8,6 +8,12 @@
             color: rgba(0, 0, 0, 0.5);
         }
     }
+    .product__card-container {
+        width: 100%;
+        @media(min-width: $medium-container) {
+            width: 60%;
+        };
+    }
 
     &__top {
         display: flex;
@@ -21,10 +27,6 @@
             display: flex;
             width: 100%;
             margin-bottom: $spacing-lg;
-
-            @media (min-width: $medium-container) {
-                width: 60%;
-            }
 
             &--img {
                 background-color: $color-blue-light;
