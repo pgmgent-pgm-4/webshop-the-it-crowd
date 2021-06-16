@@ -53,10 +53,8 @@ const getUserById = async (req, res, next) => {
 		// Get specific user from database
 		const user = await database.User.findByPk(userId, {
             include: [
-                {
-                    model: database.Profile,
-                    as: 'profile'
-                }
+                {all: true, 
+                include: [{all: true}]}
             ]
         });
 
