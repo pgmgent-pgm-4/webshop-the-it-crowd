@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="37.317" height="26.42" viewBox="0 0 37.317 26.42">
+  <g id="Component_24_1" data-name="Component 24 – 1" transform="translate(1)">
+    <g id="Group_361" data-name="Group 361" transform="translate(10.931 0)">
+      <ellipse id="Ellipse_4" data-name="Ellipse 4" cx="6.567" cy="6.567" rx="6.567" ry="6.567" transform="translate(6.126 6.346)" fill="none" stroke="#ffce00" stroke-miterlimit="10" stroke-width="2"/>
+      <line id="Line_6" data-name="Line 6" y2="3.201" transform="translate(12.638 0)" fill="none" stroke="#ffce00" stroke-miterlimit="10" stroke-width="2"/>
+      <line id="Line_7" data-name="Line 7" y2="3.201" transform="translate(12.638 22.185)" fill="none" stroke="#ffce00" stroke-miterlimit="10" stroke-width="2"/>
+      <line id="Line_8" data-name="Line 8" x2="3.201" transform="translate(0 12.748)" fill="none" stroke="#ffce00" stroke-miterlimit="10" stroke-width="2"/>
+      <line id="Line_9" data-name="Line 9" x2="3.201" transform="translate(22.185 12.748)" fill="none" stroke="#ffce00" stroke-miterlimit="10" stroke-width="2"/>
+      <line id="Line_10" data-name="Line 10" y1="2.263" x2="2.263" transform="translate(3.386 19.35)" fill="none" stroke="#ffce00" stroke-miterlimit="10" stroke-width="2"/>
+      <line id="Line_11" data-name="Line 11" y1="2.263" x2="2.263" transform="translate(19.074 3.662)" fill="none" stroke="#ffce00" stroke-miterlimit="10" stroke-width="2"/>
+      <line id="Line_12" data-name="Line 12" x2="2.263" y2="2.263" transform="translate(3.718 3.331)" fill="none" stroke="#ffce00" stroke-miterlimit="10" stroke-width="2"/>
+      <line id="Line_13" data-name="Line 13" x2="2.263" y2="2.263" transform="translate(19.405 19.019)" fill="none" stroke="#ffce00" stroke-miterlimit="10" stroke-width="2"/>
+    </g>
+    <path id="Path_6" data-name="Path 6" d="M647.731,464.629a5.137,5.137,0,0,0-7.658-4.476A6.436,6.436,0,1,0,627.68,456.9a6.539,6.539,0,1,0-1.745,12.867v0h16.71A5.137,5.137,0,0,0,647.731,464.629Z" transform="translate(-619.5 -444.348)" fill="#fff" stroke="#0abdff" stroke-miterlimit="10" stroke-width="2"/>
+  </g>
+</svg>

@@ -1,0 +1,18 @@
+@mixin flexer ($align, $justify, $wrap){
+    display: flex;
+    align-items: $align;
+    justify-content: $justify;
+    flex-wrap: $wrap;
+}
+
+@mixin for-mobile-up {
+    @media (min-width: $small-container) { @content; };
+}
+
+@mixin for-tablet-up {
+    @media (min-width: $medium-container) { @content; };
+}
+
+@mixin for-desktop-up {
+    @media (min-width: $large-container) { @content; };
+}

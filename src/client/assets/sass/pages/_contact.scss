@@ -1,0 +1,45 @@
+.contact {
+    margin-bottom: $spacing-xxl;
+
+    @media (min-width: $medium-container) {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    h2 {
+        margin-bottom: $spacing-lg;
+    }
+
+    &__message {
+        margin-bottom: $spacing-xl;
+
+        @media (min-width: $medium-container) {
+            width: 50%;
+        }
+    }
+
+    &__info {
+        ul {
+            li {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                margin-bottom: $spacing-base;
+                
+                svg {
+                    margin-right: $spacing-base;
+                    width: 2rem;
+
+                    path {
+                        fill: $color-black;
+                    }
+                }
+            }
+        }
+    }
+
+    button {
+        margin-top: $spacing-base;
+    }
+}

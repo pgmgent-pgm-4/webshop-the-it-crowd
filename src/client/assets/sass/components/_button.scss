@@ -1,0 +1,14 @@
+.button--primary {
+    border: none;
+    background-color: $color-green-btn;
+    color: $color-bg;
+    padding: $spacing-base;
+    border-radius: $radius-sm;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s ease;
+
+    &:hover {
+        background-color: $color-green-accent;
+    }
+}

@@ -1,28 +1,19 @@
-/**
- * Registering the ToDo API endpoints
- */
- import express from 'express';
- import userDb from '../model/user/UserDb.js';
- const userData = new userDb(); //Create an instance of userDb
+import userRoutes from './userRoutes.js';
+import profileRoutes from './profileRoutes.js';
+import categoryRoutes from './categoryRoutes.js';
+import orderRoutes from './orderRoutes.js';
+import paymentRoutes from './paymentRoutes.js';
+import reviewRoutes from './reviewRoutes.js';
+import productRoutes from './productRoutes.js';
+import promotionRoutes from './promotionRoutes.js';
 
- import {
-  getUser,
-  addUser,
-  updateUser,
-  deleteUser
- } from '../controllers/user/userController.js';
-
- /**
-  * Make a Router
-  */
- const router = express.Router();
-
- /**
-  * Router for users
-  */
-  router.get('/users', async (req, res) => await getUser(userData, req, res)); // get users
-  router.post('/users', async (req, res) => await addUser(userData, req, res)); //add user
-  router.put('/users/:id', async (req, res) => await updateUser(userData, req, res)); // update user
-  router.delete('/users/:id', async (req, res) => await deleteUser(userData, req, res)); //delete user
-
-  export default router;
+export default [
+    userRoutes,
+    profileRoutes,
+    categoryRoutes,
+    orderRoutes,
+    paymentRoutes,
+    reviewRoutes,
+    productRoutes,
+    promotionRoutes
+]

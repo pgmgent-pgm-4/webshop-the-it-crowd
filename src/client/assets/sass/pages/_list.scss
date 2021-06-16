@@ -1,0 +1,103 @@
+.list-page {
+    section {
+        @media (min-width: $medium-container) {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+
+    &__filter--title {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: $spacing-lg;
+    }
+
+    &__filter {
+        width: 100%;
+
+        @media (min-width: $medium-container) {
+            width: 15rem;
+            margin-right: $spacing-lg;
+        } 
+
+        &__item {
+            margin-bottom: $spacing-md;
+            padding-bottom: $spacing-md;
+            border-bottom: solid 1px $color-black;
+
+            &:last-child {
+                border-bottom: 0;
+            }
+
+            &__top {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: $spacing-sm;
+            }
+
+            &__check {
+                div {
+                    margin-bottom: $spacing-sm;
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+
+                input {
+                    margin-right: $spacing-sm;
+                }
+            }
+        }
+
+        &__sunlight-water {
+            .list-page__filter__item__content {
+                display: flex;
+
+                div {
+                    svg {
+                        height: 2.5rem;
+                        width: 2.5rem;
+                        cursor: pointer;
+                        margin-right: $spacing-md;
+                    }
+
+                    input {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+
+    &__items {
+        width: 100%;
+        .list {
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+            li {
+                margin-bottom: $spacing-lg;
+                width: 100%;
+
+                @media (min-width: $small-container) {
+                    width: 45%;
+
+                    &:nth-child(even) {
+                        margin-right: 0;
+                    }
+                }
+
+                @media (min-width: $large-container) {
+                    width: 28%;
+
+                    &:nth-child(odd) {
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+    }
+}

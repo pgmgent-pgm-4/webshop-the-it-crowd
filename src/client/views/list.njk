@@ -1,0 +1,180 @@
+---
+layout: base
+title: list-page
+---
+
+<article class="list-page">
+    <div class="list-page__filter--title">
+        <button>Filter</button>
+        <p><span class="list-results"></span> Resultaten</p>
+    </div>
+    
+    <section>
+        <form class="list-page__filter">
+            <div class="list-page__filter__item list-page__filter__sunlight-water">
+                <div class="list-page__filter__item__top">
+                    <h3>Sunlight</h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="11.435" viewBox="0 0 20 11.435">
+                        <path id="Icon_ionic-ios-arrow-down" data-name="Icon ionic-ios-arrow-down" d="M16.191,19.235l7.562-7.568a1.423,1.423,0,0,1,2.019,0,1.441,1.441,0,0,1,0,2.025L17.2,22.265a1.427,1.427,0,0,1-1.971.042L6.6,13.7a1.429,1.429,0,1,1,2.019-2.025Z" transform="translate(26.188 22.682) rotate(180)"/>
+                    </svg>
+                </div>
+                <div class="list-page__filter__item__content">
+                    <div>
+                        <input class="sunlight" type="checkbox" id="sunny" name="sunny" value="Sleek">
+                        <label for="sunny">
+                            <svg id="Group_4" data-name="Group 4" xmlns="http://www.w3.org/2000/svg" width="48.431" height="48.431" viewBox="0 0 48.431 48.431">
+                                <circle id="Ellipse_4" data-name="Ellipse 4" cx="12.528" cy="12.528" r="12.528" transform="translate(11.687 12.107)" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+                                <line id="Line_6" data-name="Line 6" y2="6.107" transform="translate(24.11)" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+                                <line id="Line_7" data-name="Line 7" y2="6.107" transform="translate(24.11 42.324)" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+                                <line id="Line_8" data-name="Line 8" x2="6.107" transform="translate(0 24.32)" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+                                <line id="Line_9" data-name="Line 9" x2="6.107" transform="translate(42.324 24.32)" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+                                <line id="Line_10" data-name="Line 10" y1="4.317" x2="4.317" transform="translate(6.462 36.915)" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+                                <line id="Line_11" data-name="Line 11" y1="4.317" x2="4.317" transform="translate(36.389 6.986)" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+                                <line id="Line_12" data-name="Line 12" x2="4.317" y2="4.317" transform="translate(7.093 6.355)" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+                                <line id="Line_13" data-name="Line 13" x2="4.317" y2="4.317" transform="translate(37.02 36.284)" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+                            </svg>
+                        </label>
+                    </div>
+                    <div>
+                        <input class="sunlight" type="checkbox" id="semicloudy" name="semicloudy" value="Generic">
+                        <label for="semicloudy">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="43.375" height="37.512" viewBox="0 0 43.375 37.512">
+                                <g transform="translate(0 -34.603)">
+                                    <path id="Path_31" data-name="Path 31" d="M34.7,119a11.965,11.965,0,0,0-.655-3.2,8.737,8.737,0,1,0-13.657-7.833,12.039,12.039,0,0,0-8.178,5.867,9.246,9.246,0,1,0-2.968,18H25.631a.847.847,0,1,0,0-1.694H9.246a7.552,7.552,0,1,1,7.117-10.069.847.847,0,0,0,1.6-.565,9.289,9.289,0,0,0-4.192-4.98,10.352,10.352,0,0,1,19.236,4.476,6.412,6.412,0,0,0-2.619.97.847.847,0,1,0,.92,1.423,4.752,4.752,0,1,1,2.576,8.746H32.408a.847.847,0,0,0,0,1.694h1.474A6.447,6.447,0,0,0,34.7,119Zm-12.02-11.25c-.191,0-.381.006-.571.015a7.043,7.043,0,1,1,11.243,6.45A12.057,12.057,0,0,0,22.684,107.753Z" transform="translate(0 -59.73)"/>
+                                    <circle id="Ellipse_6" data-name="Ellipse 6" cx="0.847" cy="0.847" r="0.847" transform="translate(28.173 70.42)"/>
+                                    <path id="Path_32" data-name="Path 32" d="M288.974,38.185a.847.847,0,0,0,1.629-.466l-.716-2.5a.847.847,0,0,0-1.629.466Z" transform="translate(-263.808 0)"/>
+                                    <path id="Path_33" data-name="Path 33" d="M189.925,114.66l2.275,1.262a.847.847,0,1,0,.822-1.482l-2.275-1.262a.847.847,0,0,0-.822,1.482Z" transform="translate(-173.436 -71.822)"/>
+                                    <path id="Path_34" data-name="Path 34" d="M454.343,259.442l-2.275-1.262a.847.847,0,1,0-.822,1.482l2.275,1.262a.847.847,0,1,0,.822-1.481Z" transform="translate(-412.619 -204.539)"/>
+                                    <path id="Path_35" data-name="Path 35" d="M466.633,148.285a.847.847,0,0,0-1.048-.581l-2.5.716a.847.847,0,1,0,.466,1.629l2.5-.716A.847.847,0,0,0,466.633,148.285Z" transform="translate(-423.291 -103.49)"/>
+                                    <path id="Path_36" data-name="Path 36" d="M399.063,52.8a.847.847,0,0,0,1.152-.33l1.262-2.275A.847.847,0,0,0,400,49.371l-1.262,2.275A.847.847,0,0,0,399.063,52.8Z" transform="translate(-364.857 -13.118)"/>
+                                </g>
+                            </svg>
+                        </label>
+                    </div>
+                    <div>
+                        <input class="sunlight" type="checkbox" id="cloudy" name="cloudy" value="Rustic">
+                        <label for="cloudy">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="59.91" height="40.496" viewBox="0 0 59.91 40.496">
+                                <path id="Path_50" data-name="Path 50" d="M677.226,479.078a10.847,10.847,0,0,0-5.2-9.314,10.263,10.263,0,0,0-10.454-.086,13.787,13.787,0,0,0-2.8-13.965,12.926,12.926,0,0,0-13.426-3.62,13.408,13.408,0,0,0-9.115,10.753,13.161,13.161,0,0,0-13.6,4.463,14.029,14.029,0,0,0-1.919,14.535,13.361,13.361,0,0,0,11.956,8.023h34.166a10.652,10.652,0,0,0,10.4-10.79Z" transform="translate(-618.316 -450.371)" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+                            </svg>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="list-page__filter__item list-page__filter__sunlight-water">
+                <div class="list-page__filter__item__top">
+                    <h3>Water</h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="11.435" viewBox="0 0 20 11.435">
+                        <path id="Icon_ionic-ios-arrow-down" data-name="Icon ionic-ios-arrow-down" d="M16.191,19.235l7.562-7.568a1.423,1.423,0,0,1,2.019,0,1.441,1.441,0,0,1,0,2.025L17.2,22.265a1.427,1.427,0,0,1-1.971.042L6.6,13.7a1.429,1.429,0,1,1,2.019-2.025Z" transform="translate(26.188 22.682) rotate(180)"/>
+                    </svg>
+                </div>
+                <div class="list-page__filter__item__content">
+                    <div>
+                        <input type="checkbox" id="drop1" name="drop1" value="drop1">
+                        <label for="drop1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30.846" height="39.77" viewBox="0 0 30.846 39.77">
+                                <path id="Path_5" data-name="Path 5" d="M808.346,366.407a14.423,14.423,0,0,1-28.846,0c0-7.966,14.423-22.907,14.423-22.907S808.346,358.441,808.346,366.407Z" transform="translate(-778.5 -342.06)" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+                            </svg>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="drop2" name="drop2" value="drop2">
+                        <label for="drop2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="39.01" height="39.77" viewBox="0 0 39.01 39.77">
+                                <g id="Component_27_1" data-name="Component 27 – 1" transform="translate(0.999 1.44)">
+                                    <path id="Path_55" data-name="Path 55" d="M802.107,361.453a11.3,11.3,0,1,1-22.607,0c0-6.244,11.3-17.953,11.3-17.953S802.107,355.21,802.107,361.453Z" transform="translate(-765.096 -335.427)" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+                                    <path id="Path_56" data-name="Path 56" d="M792.327,353.693a6.413,6.413,0,0,1-12.826,0c0-3.542,6.413-10.193,6.413-10.193S792.327,350.144,792.327,353.693Z" transform="translate(-779.5 -343.5)" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+                                </g>
+                            </svg>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="drop3" name="drop3" value="drop3">
+                        <label for="drop3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="31.56" height="39.77" viewBox="0 0 31.56 39.77">
+                                <g id="Component_26_1" data-name="Component 26 – 1" transform="translate(0.999 1.44)">
+                                    <path id="Path_58" data-name="Path 58" d="M796.751,357.2a8.626,8.626,0,0,1-17.251,0c0-4.764,8.626-13.7,8.626-13.7S796.751,352.435,796.751,357.2Z" transform="translate(-767.19 -328.495)" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+                                    <path id="Path_57" data-name="Path 57" d="M789.288,351.278a4.893,4.893,0,1,1-9.787,0c0-2.7,4.893-7.778,4.893-7.778S789.288,348.57,789.288,351.278Z" transform="translate(-779.5 -334.656)" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+                                    <path id="Path_59" data-name="Path 59" d="M785.935,348.61a3.218,3.218,0,1,1-6.435,0c0-1.777,3.217-5.11,3.217-5.11S785.935,346.833,785.935,348.61Z" transform="translate(-766.317 -343.5)" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
+                                </g>
+                            </svg>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="list-page__filter__item">
+                <div class="list-page__filter__item__top">
+                    <h3>Species</h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="11.435" viewBox="0 0 20 11.435">
+                        <path id="Icon_ionic-ios-arrow-down" data-name="Icon ionic-ios-arrow-down" d="M16.191,19.235l7.562-7.568a1.423,1.423,0,0,1,2.019,0,1.441,1.441,0,0,1,0,2.025L17.2,22.265a1.427,1.427,0,0,1-1.971.042L6.6,13.7a1.429,1.429,0,1,1,2.019-2.025Z" transform="translate(26.188 22.682) rotate(180)"/>
+                    </svg>
+                </div>
+                <div class="list-page__filter__item__check">
+                    <div>
+                        <input type="checkbox" id="cactus" name="cactus" value="cactus">
+                        <label for="cactus">Cactus</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="Monsterna" name="Monsterna" value="Monsterna">
+                        <label for="Monsterna">Monsterna</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="Calathea" name="Calathea" value="Calathea">
+                        <label for="Calathea">Calathea</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="Dracaena" name="Dracaena" value="Dracaena">
+                        <label for="Dracaena">Dracaena</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="Palm" name="Palm" value="Palm">
+                        <label for="Palm">Palm</label>
+                    </div>
+                </div>
+            </div>
+            <div class="list-page__filter__item">
+                <div class="list-page__filter__item__top">
+                    <h3>Features</h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="11.435" viewBox="0 0 20 11.435">
+                        <path id="Icon_ionic-ios-arrow-down" data-name="Icon ionic-ios-arrow-down" d="M16.191,19.235l7.562-7.568a1.423,1.423,0,0,1,2.019,0,1.441,1.441,0,0,1,0,2.025L17.2,22.265a1.427,1.427,0,0,1-1.971.042L6.6,13.7a1.429,1.429,0,1,1,2.019-2.025Z" transform="translate(26.188 22.682) rotate(180)"/>
+                    </svg>
+                </div>
+                <div class="list-page__filter__item__check">
+                    <div>
+                        <input type="checkbox" id="leaves-large" name="leaves-large" value="leaves-large">
+                        <label for="leaves-large">Large leaves</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="air-purification" name="air-purification" value="air-purification">
+                        <label for="air-purification">Air purification</label>
+                    </div>
+                </div>
+            </div>
+            <div class="list-page__filter__item">
+                <div class="list-page__filter__item__top">
+                    <h3>Color</h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="11.435" viewBox="0 0 20 11.435">
+                        <path id="Icon_ionic-ios-arrow-down" data-name="Icon ionic-ios-arrow-down" d="M16.191,19.235l7.562-7.568a1.423,1.423,0,0,1,2.019,0,1.441,1.441,0,0,1,0,2.025L17.2,22.265a1.427,1.427,0,0,1-1.971.042L6.6,13.7a1.429,1.429,0,1,1,2.019-2.025Z" transform="translate(26.188 22.682) rotate(180)"/>
+                    </svg>
+                </div>
+                <div class="list-page__filter__item__check">
+                    <div>
+                        <input type="checkbox" id="Green" name="Green" value="Green">
+                        <label for="Green">Green</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="Purple" name="Purple" value="Purple">
+                        <label for="Purple">Purple</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="Yellow" name="Yellow" value="Yellow">
+                        <label for="Yellow">Yellow</label>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <article class="list-page__items">
+            {% include "_components/list-items.njk" %}
+        </article>
+    </section>
+</article>

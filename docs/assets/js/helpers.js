@@ -1,0 +1,1 @@
+export const BramStr = 'bramzz'
