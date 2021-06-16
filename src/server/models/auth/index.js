@@ -6,8 +6,7 @@ import passportLocal from 'passport-local';
 const LocalStrategy = passportLocal.Strategy;
 
 
-import UserDb from '../User/index.js.js.js';
-const userData = new UserDb();
+import database from '../../database';
 
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
@@ -26,13 +25,13 @@ passport.use(new LocalStrategy({
         Logger.info(username);
 
         // get user from db
-        const user = await userData.findOne(username);
+        const user = await database.User.findOne({ where: { 'userName': username } });
         // check if user is found
         if (!user) {
             return done(null, false, {message: 'User not found in database'})
         }
         // check on valid pass
-        if (!await isPasswordValid(password, user.userpwd)) {
+        if (!await isPasswordValid(password, user.password)) {
             return done(null, false, { message: 'Password incorrect' })
         }
         // return the existing and authenticated used
@@ -51,9 +50,8 @@ app.post('/login', (req, res) => {
         } else {
             const jwtData = {
                 id: user.id,
-                username: user.username,
-                email: user.email,
-                type: user.type
+                username: user.userName,
+                email: user.email
             }
             const token = jwt.sign(jwtData, process.env.JWT_UNIQUE_KEY, {
                 expiresIn: parseInt(process.env.JWT_LIFETIME)
@@ -64,7 +62,7 @@ app.post('/login', (req, res) => {
                 token: token,
                 user: {
                     id: user.id,
-                    username: user.username,
+                    username: user.userName,
                     email: user.email
                 }
             });

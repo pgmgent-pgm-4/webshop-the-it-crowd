@@ -69,9 +69,26 @@ const createOrder = async (req, res, next) => {
 	try {
 		// Get body from response
 		const model = req.body;
+        let order = {
+            orderState: model.orderState,
+            profileId: model.profileId,
+        }
 		// Create a post
-		const createdModel = await database.Order.create(model);
-		// Send response
+		const createdModel = await database.Order.create(order);
+		//create orderProduct
+        if( model.OrderProduct ) {
+            model.OrderProduct.forEach( async product => {
+                let OrderProduct = {
+                    productPrice: product.productPrice,
+                    productAmount: product.productAmount,
+                    productId: product.productId,
+                    orderId: createdModel.id
+                }
+                await database.OrderProduct.create(OrderProduct)
+            });
+        }
+        
+        // Send response
 		res.status(201).json(createdModel);
 	} catch (error) {
 		handleHTTPError(error, next);

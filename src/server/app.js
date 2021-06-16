@@ -11,9 +11,9 @@ import swaggerUi from 'swagger-ui-express';
 Custom modules
 */
 import { EnvironmentVariables } from './config/index.js';
-import { morganMiddleware, swaggerSpec } from './middleware/index.js';
+import { morganMiddleware, swaggerSpec, auth } from './middleware/index.js';
 import apiRoutes from './api/routes/index.js';
-
+import authRoutes from './models/auth/index.js'
 /*
 Database
 */
@@ -63,7 +63,8 @@ if (EnvironmentVariables.NODE_ENV === 'development') {
 /*
 API Routes
 */
-app.use('/api', cors(), apiRoutes);
+app.use('/api', cors(), auth, apiRoutes);
+app.use('/auth', cors(), authRoutes);
 
 /*
 Swagger

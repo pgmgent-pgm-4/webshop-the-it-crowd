@@ -11,6 +11,10 @@ import * as subfunctions from './subfunctions.js';
             this.dropDownMenu();
             this.getProducts();
             this.getDetail();
+            this.login();
+            this.register();
+            this.checkLogin();
+            this.getBasket();
         },
         eventListeners() {
 
@@ -30,6 +34,100 @@ import * as subfunctions from './subfunctions.js';
            this.$listResults = document.querySelector('.list-results') || null;
            //filtering
            this.$sunlight = document.querySelectorAll('.sunlight') || null;
+           //login
+           this.$loginForm = document.querySelector('.registration__log-in form') || null;
+           this.$registerForm = document.querySelector('.registration__register form') || null;
+           //add to cart - checkout
+           this.$addToCart = document.querySelector('.detail__info__right__amount') || null;
+
+        },
+        checkLogin() {
+            let currentUser = this.getCurrentUser();
+            if(currentUser !== 'no') {
+                document.querySelector('.nav__list-item:last-child a').innerHTML = "Logout"
+                document.querySelector('.nav__list-item:last-child a').addEventListener('click', e => {
+                    localStorage.setItem('currentUser', 'no');
+                    document.querySelector('.nav__list-item:last-child a').innerHTML = "Log in"
+                })
+            }
+            if(currentUser === 'no') {
+                document.querySelector('.nav__list-item:last-child a').innerHTML = "Log in"
+            }
+        },
+        register() {
+            if(this.$registerForm) {
+                console.log(this.$registerForm);
+                this.$registerForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleRegister(e);
+ 
+                    console.log('target', e.target)
+                })
+            }
+        },
+        async handleRegister() {
+            const user = {
+                "userName": document.querySelector('#register-email').value,
+                "password": document.querySelector('#register-password').value,
+                "email": document.querySelector('#register-password').value
+            }
+
+            const options = {
+                method: 'POST',
+                body: JSON.stringify(user),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+
+            let response = await fetch("http://127.0.0.1:6001/api/users", options)
+            let data = await response.json();
+            console.log(data)
+        },
+        login() {
+            if (this.$loginForm) {
+                console.log(this.$loginForm)
+                this.$loginForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleLogin(e);
+ 
+                    console.log('target', e.target)
+                })
+            }
+        },
+        async handleLogin() {
+            const user = {
+                "username": document.querySelector('#login-email').value,
+                "password": document.querySelector('#login-password').value
+            }
+
+            const options = {
+                method: 'POST',
+                body: JSON.stringify(user),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+
+            let response = await fetch("http://127.0.0.1:6001/auth/login", options)
+            let data = await response.json();
+            console.log(data);
+            if(data.succes) {
+                // save JWT to localstorage and user object
+                localStorage.setItem('token', data.token); 
+                localStorage.setItem('currentUser', JSON.stringify(data.user)); 
+                document.querySelector('.nav__list-item:last-child a').innerHTML = "Logout"
+                document.querySelector('.nav__list-item:last-child a').addEventListener('click', e => {
+                    localStorage.setItem('currentUser', 'no');
+                    document.querySelector('.nav__list-item:last-child a').innerHTML = "Log in"
+                })
+            }
+        },
+        getTokenJwt() {
+            return localStorage.getItem('token');
+        },
+        getCurrentUser() {
+            return JSON.parse(localStorage.getItem('currentUser'));
         },
         hamburgerMenu() {
             this.$hamburger.addEventListener('click', (e) => {
@@ -78,7 +176,6 @@ import * as subfunctions from './subfunctions.js';
                 })
             }
         },
-
         async getProducts() {
             if (this.$homeList !== null) {
                 const response = await fetch(`${constants.BASE_URL}/products`);
@@ -111,9 +208,9 @@ import * as subfunctions from './subfunctions.js';
 
                         <div class="list__item__link__bottom">
                             <h3>${products[i].name}</h3>
-                            <div class="list__item__link__bottom__price">
-                                <h3>${products[i].price}</h3>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="35.399" height="29.829" viewBox="0 0 35.399 29.829">
+                            <div class="list__item__link__bottom__price ">
+                                <h3>€${products[i].price}</h3>
+                                <svg id=${products[i].id} class="" xmlns="http://www.w3.org/2000/svg" width="35.399" height="29.829" viewBox="0 0 35.399 29.829">
                                     <g id="shopping-cart_1_" data-name="shopping-cart (1)" transform="translate(0 -40.283)">
                                         <path id="Path_27" data-name="Path 27" d="M34.874,50.293a2.446,2.446,0,0,0-1.924-.923H26.132l-3.7-8.465a1.037,1.037,0,1,0-1.9.83l3.334,7.635H11.53l3.334-7.635a1.037,1.037,0,1,0-1.9-.83l-3.7,8.465H2.45a2.446,2.446,0,0,0-1.924.923,2.388,2.388,0,0,0-.465,2.031L3.7,68.226A2.43,2.43,0,0,0,6.09,70.112H29.309A2.43,2.43,0,0,0,31.7,68.226l3.641-15.9a2.388,2.388,0,0,0-.465-2.031ZM29.309,68.038H6.09a.371.371,0,0,1-.367-.275l-3.641-15.9a.317.317,0,0,1,.065-.275.377.377,0,0,1,.3-.141H8.361l-.272.622a1.037,1.037,0,1,0,1.9.83l.634-1.452h14.15l.634,1.452a1.037,1.037,0,0,0,1.9-.83l-.272-.622H32.95a.377.377,0,0,1,.3.141.317.317,0,0,1,.065.275l-3.641,15.9a.371.371,0,0,1-.367.275Z" transform="translate(0)" fill="#c75313"/>
                                         <path id="Path_28" data-name="Path 28" d="M152.037,266.717A1.037,1.037,0,0,0,151,267.754v7.605a1.037,1.037,0,0,0,2.074,0v-7.605A1.037,1.037,0,0,0,152.037,266.717Z" transform="translate(-140.56 -210.779)" fill="#c75313"/>
@@ -128,8 +225,8 @@ import * as subfunctions from './subfunctions.js';
                     <div class="list__item__hovered">
                         <h3 class="list__item__hovered__title">${products[i].name}</h3>
                         <div class="list__item__hovered__price">
-                            <h3>${products[i].price}</h3>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="35.399" height="29.829" viewBox="0 0 35.399 29.829">
+                            <h3>€${products[i].price}</h3>
+                            <svg id=${products[i].id} class="" xmlns="http://www.w3.org/2000/svg" width="35.399" height="29.829" viewBox="0 0 35.399 29.829">
                                 <g id="shopping-cart_1_" data-name="shopping-cart (1)" transform="translate(0 -40.283)">
                                     <path id="Path_27" data-name="Path 27" d="M34.874,50.293a2.446,2.446,0,0,0-1.924-.923H26.132l-3.7-8.465a1.037,1.037,0,1,0-1.9.83l3.334,7.635H11.53l3.334-7.635a1.037,1.037,0,1,0-1.9-.83l-3.7,8.465H2.45a2.446,2.446,0,0,0-1.924.923,2.388,2.388,0,0,0-.465,2.031L3.7,68.226A2.43,2.43,0,0,0,6.09,70.112H29.309A2.43,2.43,0,0,0,31.7,68.226l3.641-15.9a2.388,2.388,0,0,0-.465-2.031ZM29.309,68.038H6.09a.371.371,0,0,1-.367-.275l-3.641-15.9a.317.317,0,0,1,.065-.275.377.377,0,0,1,.3-.141H8.361l-.272.622a1.037,1.037,0,1,0,1.9.83l.634-1.452h14.15l.634,1.452a1.037,1.037,0,0,0,1.9-.83l-.272-.622H32.95a.377.377,0,0,1,.3.141.317.317,0,0,1,.065.275l-3.641,15.9a.371.371,0,0,1-.367.275Z" transform="translate(0)" fill="#c75313"/>
                                     <path id="Path_28" data-name="Path 28" d="M152.037,266.717A1.037,1.037,0,0,0,151,267.754v7.605a1.037,1.037,0,0,0,2.074,0v-7.605A1.037,1.037,0,0,0,152.037,266.717Z" transform="translate(-140.56 -210.779)" fill="#c75313"/>
@@ -237,8 +334,8 @@ import * as subfunctions from './subfunctions.js';
                         <div class="list__item__link__bottom">
                             <h3>${product.name}</h3>
                             <div class="list__item__link__bottom__price">
-                                <h3>${product.price}</h3>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="35.399" height="29.829" viewBox="0 0 35.399 29.829">
+                                <h3>€${product.price}</h3>
+                                <svg id=${product.id} class="" xmlns="http://www.w3.org/2000/svg" width="35.399" height="29.829" viewBox="0 0 35.399 29.829">
                                     <g id="shopping-cart_1_" data-name="shopping-cart (1)" transform="translate(0 -40.283)">
                                         <path id="Path_27" data-name="Path 27" d="M34.874,50.293a2.446,2.446,0,0,0-1.924-.923H26.132l-3.7-8.465a1.037,1.037,0,1,0-1.9.83l3.334,7.635H11.53l3.334-7.635a1.037,1.037,0,1,0-1.9-.83l-3.7,8.465H2.45a2.446,2.446,0,0,0-1.924.923,2.388,2.388,0,0,0-.465,2.031L3.7,68.226A2.43,2.43,0,0,0,6.09,70.112H29.309A2.43,2.43,0,0,0,31.7,68.226l3.641-15.9a2.388,2.388,0,0,0-.465-2.031ZM29.309,68.038H6.09a.371.371,0,0,1-.367-.275l-3.641-15.9a.317.317,0,0,1,.065-.275.377.377,0,0,1,.3-.141H8.361l-.272.622a1.037,1.037,0,1,0,1.9.83l.634-1.452h14.15l.634,1.452a1.037,1.037,0,0,0,1.9-.83l-.272-.622H32.95a.377.377,0,0,1,.3.141.317.317,0,0,1,.065.275l-3.641,15.9a.371.371,0,0,1-.367.275Z" transform="translate(0)" fill="#c75313"/>
                                         <path id="Path_28" data-name="Path 28" d="M152.037,266.717A1.037,1.037,0,0,0,151,267.754v7.605a1.037,1.037,0,0,0,2.074,0v-7.605A1.037,1.037,0,0,0,152.037,266.717Z" transform="translate(-140.56 -210.779)" fill="#c75313"/>
@@ -253,8 +350,8 @@ import * as subfunctions from './subfunctions.js';
                     <div class="list__item__hovered">
                         <h3 class="list__item__hovered__title">${product.name}</h3>
                         <div class="list__item__hovered__price">
-                            <h3>${product.price}</h3>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="35.399" height="29.829" viewBox="0 0 35.399 29.829">
+                            <h3>€${product.price}</h3>
+                            <svg id=${product.id} class="" xmlns="http://www.w3.org/2000/svg" width="35.399" height="29.829" viewBox="0 0 35.399 29.829">
                                 <g id="shopping-cart_1_" data-name="shopping-cart (1)" transform="translate(0 -40.283)">
                                     <path id="Path_27" data-name="Path 27" d="M34.874,50.293a2.446,2.446,0,0,0-1.924-.923H26.132l-3.7-8.465a1.037,1.037,0,1,0-1.9.83l3.334,7.635H11.53l3.334-7.635a1.037,1.037,0,1,0-1.9-.83l-3.7,8.465H2.45a2.446,2.446,0,0,0-1.924.923,2.388,2.388,0,0,0-.465,2.031L3.7,68.226A2.43,2.43,0,0,0,6.09,70.112H29.309A2.43,2.43,0,0,0,31.7,68.226l3.641-15.9a2.388,2.388,0,0,0-.465-2.031ZM29.309,68.038H6.09a.371.371,0,0,1-.367-.275l-3.641-15.9a.317.317,0,0,1,.065-.275.377.377,0,0,1,.3-.141H8.361l-.272.622a1.037,1.037,0,1,0,1.9.83l.634-1.452h14.15l.634,1.452a1.037,1.037,0,0,0,1.9-.83l-.272-.622H32.95a.377.377,0,0,1,.3.141.317.317,0,0,1,.065.275l-3.641,15.9a.371.371,0,0,1-.367.275Z" transform="translate(0)" fill="#c75313"/>
                                     <path id="Path_28" data-name="Path 28" d="M152.037,266.717A1.037,1.037,0,0,0,151,267.754v7.605a1.037,1.037,0,0,0,2.074,0v-7.605A1.037,1.037,0,0,0,152.037,266.717Z" transform="translate(-140.56 -210.779)" fill="#c75313"/>
@@ -338,7 +435,7 @@ import * as subfunctions from './subfunctions.js';
             
             <section class="detail__info__right">
                 <div class="detail__info__right__title--desktop detail__info__right__title">
-                    <h2>${product.name}</h2>
+                    <h2 id="add-to-cart-product" data-id="${product.id}">${product.name}</h2>
                     <div class="stars">
                         <svg xmlns="http://www.w3.org/2000/svg" width="21.999" height="20.499" viewBox="0 0 21.999 20.499"><path id="Icon_ionic-ios-star" data-name="Icon ionic-ios-star" d="M22.452,10.125H15.557l-2.1-6.253a.759.759,0,0,0-1.425,0l-2.1,6.253H3a.752.752,0,0,0-.75.75A.551.551,0,0,0,2.264,11a.721.721,0,0,0,.314.53l5.667,3.994L6.07,21.848a.752.752,0,0,0,.258.844.725.725,0,0,0,.422.183.919.919,0,0,0,.469-.169l5.531-3.942,5.531,3.942a.878.878,0,0,0,.469.169.673.673,0,0,0,.417-.183.743.743,0,0,0,.258-.844l-2.175-6.323,5.62-4.031.136-.117a.786.786,0,0,0,.244-.5A.794.794,0,0,0,22.452,10.125Z" transform="translate(-1.75 -2.875)" fill="none" stroke="#fdbb38" stroke-width="1"/></svg>
                         <svg xmlns="http://www.w3.org/2000/svg" width="21.999" height="20.499" viewBox="0 0 21.999 20.499"><path id="Icon_ionic-ios-star" data-name="Icon ionic-ios-star" d="M22.452,10.125H15.557l-2.1-6.253a.759.759,0,0,0-1.425,0l-2.1,6.253H3a.752.752,0,0,0-.75.75A.551.551,0,0,0,2.264,11a.721.721,0,0,0,.314.53l5.667,3.994L6.07,21.848a.752.752,0,0,0,.258.844.725.725,0,0,0,.422.183.919.919,0,0,0,.469-.169l5.531-3.942,5.531,3.942a.878.878,0,0,0,.469.169.673.673,0,0,0,.417-.183.743.743,0,0,0,.258-.844l-2.175-6.323,5.62-4.031.136-.117a.786.786,0,0,0,.244-.5A.794.794,0,0,0,22.452,10.125Z" transform="translate(-1.75 -2.875)" fill="none" stroke="#fdbb38" stroke-width="1"/></svg>
@@ -404,12 +501,12 @@ import * as subfunctions from './subfunctions.js';
     
                 <div class="detail__info__right__price">
                     <h3>Price</h3>
-                    <h3>€${product.price}</h3>
+                    <h3 id="add-to-cart-price">€${product.price}</h3>
                 </div>
     
                 <div class="detail__info__right__amount">
-                    <input type="number" value="1" min="1" max="99">
-                    <button class="button--primary">Add to cart</button>
+                    <input id="add-to-cart-amount" type="number" value="1" min="1" max="99">
+                    <button id="add-to-cart" class="button--primary">Add to cart</button>
                 </div>
     
                 <div class="detail__info__right__extra">
@@ -515,6 +612,76 @@ import * as subfunctions from './subfunctions.js';
             `
 
         this.$detailPage.innerHTML = tempStr;
+        document.querySelector('#add-to-cart').addEventListener('click', (e) => {
+            let currentUser = this.getCurrentUser()
+            let order = {
+                orderState: 1,
+                profileId: currentUser.id,
+                OrderProduct: [{
+                    productPrice: document.querySelector('#add-to-cart-price').innerText.split('€').join(''),
+                    productAmount: document.querySelector('#add-to-cart-amount').value,
+                    productId: document.querySelector('#add-to-cart-product').dataset.id
+                }]
+            }
+            console.log("order", order)
+
+            const options = {
+                method: 'POST',
+                body: JSON.stringify(order),
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": "Bearer " + this.getTokenJwt()
+                }
+            }
+
+            this.handleAddToOrder(options);
+        })
+        },
+        async handleAddToOrder(options) {
+            let response = await fetch("http://127.0.0.1:6001/api/orders", options)
+            let data = await response.json();
+            console.log(data)
+        },
+        async getBasket() {
+            //get profile info of user
+            let user = this.getCurrentUser();
+            let responseUser = await fetch(`http://127.0.0.1:6001/api/users/${user.id}`);
+            let dataUser = await responseUser.json();
+
+            // get orders of profile
+            let responseProfile = await fetch(`http://127.0.0.1:6001/api/profiles/${dataUser.Profile.id}`);
+            let dataProfile = await responseProfile.json();
+            console.log('profileinfo', dataProfile.order)
+            let orders = [];
+            dataProfile.order.forEach(order => {
+                if(order.orderState === 1) {
+                    orders.push(order)
+                }
+            })
+            document.querySelector('.nav__cart').innerHTML += orders.length
+            // orders to buy or show in checkout
+            let products = []
+            orders.forEach(order => {
+                order.OrderProduct.forEach(product => {
+                    products.push(product.productId)
+                })
+            })
+
+            //get porudcts
+            let responseProducts = await fetch('http://127.0.0.1:6001/api/products');
+            let dataProducts = await responseProducts.json();
+            console.log(dataProducts)
+            let checkoutProducts = []
+            dataProducts.forEach(product => {
+                if(products.includes(product.id)){
+                    checkoutProducts.push(product)
+                }
+            })
+            console.log(checkoutProducts)
+
+            let tempStr = '';
+
+
         }
     }
     app.init();

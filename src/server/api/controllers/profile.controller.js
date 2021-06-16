@@ -49,35 +49,9 @@ const getProfileById = async (req, res, next) => {
 		// Get specific profile from database
 		const profile = await database.Profile.findByPk(profileId, {
             include: [
-                 {
-                     model: database.Order,
-                     as: "order",
-                     include: [
-                         {
-                             model: database.OrderProduct , 
-                             as: 'OrderProduct',
-                             include: [
-                                 {
-                                     model: database.Product,
-                                     as: "product"
-                                 }
-                             ]
-                         },
-                         {
-                             model: database.Payment,
-                             as: 'payment'
-                         }
-                     ]
-                 },
-                 {
-                     model: database.Review,
-                     as: 'review'
-                 },
-                 { 
-                    model: database.Payment,
-                    as: 'payment'
-                 },
-             ]
+                {all: true, 
+                include: [{all: true}]}
+            ]
         });
 
 		if (profile === null) {
