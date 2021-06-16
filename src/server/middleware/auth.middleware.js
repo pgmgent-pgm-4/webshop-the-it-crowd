@@ -34,7 +34,7 @@ passport.use(
 );
 
 export default (req, res, next) => {
-  if (req.method == 'GET') {
+  if (req.method == 'GET' || req.body.userName) {
     // we no need authentication on get requests
     next();
   } else {
